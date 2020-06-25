@@ -5,7 +5,7 @@ SET time_zone = "+00:00";
 create database gestion_psicologia;
 use  gestion_psicologia;
 
-
+select*from obrasocial
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -31,13 +31,18 @@ CREATE TABLE `persona` (
   primary key (id_persona)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `persona`
---
+select*from persona;
+select*from profesional;
+select*from usuario;
+
+select persona.nombre, paciente.descripcion, persona.numero_documento from paciente inner join persona
+on paciente.id_persona = persona.id_persona where paciente.id_paciente = '1';
 
 
 
-
+SELECT persona.id_persona, persona.nombre, persona.apellido, paciente.id_paciente, paciente.descripcion
+FROM paciente
+INNER JOIN persona ON paciente.id_persona = '1';
 -- --------------------------------------------------------
 
 --
@@ -51,8 +56,6 @@ CREATE TABLE `paciente` (
   `descripcion` varchar(250) DEFAULT NULL,
   primary key(id_paciente)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
 
 
 -- --------------------------------------------------------
@@ -165,3 +168,4 @@ CREATE TABLE `obraSocial` (
   `co_seguro` int(11) DEFAULT NULL,
   primary key (id_obra_social)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+select*from obrasocial

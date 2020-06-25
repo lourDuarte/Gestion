@@ -24,6 +24,7 @@ class MySQL {
 		$this->_mysqli->query($sql);
 	}
 
+
 	public function actualizar($sql) {
 		$this->_mysqli->query($sql);
 	}

@@ -63,9 +63,23 @@ class Profesional extends Persona{
         $sql = "UPDATE Profesional SET matricula = '$this->_matricula' WHERE id_profesional = $this->_idProfesional";
         $mysql = new MySQL();
         $mysql->actualizar($sql);
+        $mysql->desconectar();
 
     }
 
+
+    public function eliminar() {
+
+        parent::eliminar();
+
+        $sql= "DELETE FROM profesional  WHERE id_profesional = $this->_idProfesional";
+
+        echo $sql;
+
+        $mysql= new MySQL();
+        $mysql->eliminar($sql);
+
+    }
 
     public static function obtenerTodos() {
 
@@ -73,7 +87,7 @@ class Profesional extends Persona{
         	 . "profesional.id_profesional, profesional.matricula"
              . " FROM persona "
              . " INNER JOIN profesional ON profesional.id_persona = persona.id_persona";
-        echo $sql;
+        //echo $sql;
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);

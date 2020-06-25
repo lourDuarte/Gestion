@@ -39,7 +39,7 @@ class Especialidad{
 
 
         $sql = "INSERT INTO Especialidad (id_especialidad, tipo) "
-             . " VALUES (NULL, $this->_tipo)";
+             . " VALUES (NULL, '$this->_tipo')";
 
         echo $sql;
         $mysql = new MySQL();
@@ -63,7 +63,7 @@ class Especialidad{
         $sql = "SELECT id_especialidad, tipo "
              . " FROM especialidad ";
        
-        echo $sql;
+       // echo $sql;
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);

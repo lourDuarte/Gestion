@@ -43,7 +43,7 @@ class Paciente extends Persona {
         parent::guardar();
 
         $sql = "INSERT INTO Paciente (id_paciente, id_persona, descripcion) "
-             . "VALUES (NULL, $this->_idPersona, $this->_descripcion)";
+             . "VALUES (NULL, $this->_idPersona, '$this->_descripcion')";
 
         echo $sql;
 
@@ -71,17 +71,18 @@ class Paciente extends Persona {
         echo $sql;
 
         $mysql= new MySQL;
-        $mysqñ->eliminar($sql);
+        $mysql->eliminar($sql);
 
     }
 
 
-
-
     public static function obtenerTodos() {
-        $sql = "SELECT persona.id_persona, persona.nombre, persona.apellido, paciente.id_paciente, paciente.descripcion "
-             . "FROM persona "
-             . "INNER JOIN paciente ON paciente.id_persona = persona.id_persona";
+
+        $sql = "SELECT persona.id_persona, paciente.id_paciente, "
+             . " persona.nombre, persona.apellido, paciente.descripcion "
+             . " FROM paciente "
+             . " INNER JOIN persona ON paciente.id_persona = persona.id_persona ";
+        //echo $sql;
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);
@@ -97,7 +98,7 @@ class Paciente extends Persona {
         $listado = array();
         while ($registro = $datos->fetch_assoc()) {
             $paciente = new Paciente($registro['nombre'], $registro['apellido']);
-            $paciente->_idPaciente = $registro['id_cliente'];
+            $paciente->_idPaciente = $registro['id_paciente'];
             $paciente->_idPersona = $registro['id_persona'];
             $paciente->_descripcion = $registro['descripcion'];
             $listado[] = $paciente;
@@ -109,12 +110,14 @@ class Paciente extends Persona {
 
 
    public static function obtenerPorId($id) {
-        $sql = "SELECT persona.id_persona, persona.nombre, persona.apellido, "
+        $sql = "SELECT persona.id_persona,paciente.id_paciente, persona.nombre, persona.apellido, "
              . "persona.id_tipo_documento, persona.numero_documento, "
-             . "persona.fecha_nacimiento, persona.id_estado, paciente.id_paciente, "
+             . "persona.fecha_nacimiento, persona.id_estado, "
              . "paciente.descripcion FROM paciente "
              . "INNER JOIN persona on persona.id_persona = paciente.id_persona "
-             . "WHERE paciente.id_paciente = " . $id;
+             . "WHERE paciente.id_paciente = " . $id; 
+
+        //echo $sql;
 
         $mysql = new MySQL();
         $result = $mysql->consultar($sql);
@@ -122,21 +125,25 @@ class Paciente extends Persona {
 
         $data = $result->fetch_assoc();
         $paciente = self::_generarPaciente($data);
+
         return $paciente;
     }
+    
 
 
     private function _generarPaciente($data) {
         $paciente= new Paciente($data['nombre'], $data['apellido']);
         $paciente->_idPaciente= $data['id_paciente'];
         $paciente->_descripcion = $data['descripcion'];
-        $pacientel->_idPersona = $data['id_persona'];
+        $paciente->_idPersona = $data['id_persona'];
         $paciente->_fechaNacimiento = $data['fecha_nacimiento'];
         $paciente->_tipoDocumento = $data['id_tipo_documento'];
         $paciente->_numeroDocumento = $data['numero_documento'];
         $paciente->_estado = $data['id_estado'];
         return $paciente;
     }
+
+
 
 }
 
