@@ -14,8 +14,14 @@ $profesional= Profesional::ObtenerPorId($id);
 <head>
 	<title>Actualizar Profesional</title>
 	<link rel="stylesheet" type="text/css" href="../../static/css/form.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
 </head>
 <body>
+
+	<?php
+		require_once "../../menu.php";
+	?>
+	<br><br>
 
 		<caption> Actualizar Profesional</caption>
 

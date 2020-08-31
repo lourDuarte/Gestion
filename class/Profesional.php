@@ -1,14 +1,14 @@
 <?php
 require_once 'Persona.php';
 require_once 'MySQL.php';
-//require_once 'Especialidad.php';
+require_once 'Especialidad.php';
 //require_once 'ObraSocial.php';
 
 class Profesional extends Persona{
 
 	private $_idProfesional;
 	private $_matricula;
-	//private $_arrEspecialidad = array();
+	private $_arrEspecialidad = array();
 	//private $_arrObraSocial = array();
 
 
@@ -146,8 +146,12 @@ class Profesional extends Persona{
         return $profesional;
     }
 
+ 
 
 
+    public function getEspecialidad(){
+        return $this->_arrEspecialidad;
+    }
 
 
 }

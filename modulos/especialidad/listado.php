@@ -2,6 +2,16 @@
 
 require_once '../../class/Especialidad.php';
 
+const SIN_ACCION = 0;
+const ESPECIALIDAD_GUARDADO = 1;
+const ESPECIALIDAD_ACTUALIZADA = 2;
+
+if (isset($_GET['mensaje'])) {
+	$mensaje = $_GET['mensaje'];
+} else {
+	$mensaje = SIN_ACCION;
+}
+
 $listadoEspecialidades = Especialidad::obtenerTodos();
 
 ?>
@@ -11,13 +21,23 @@ $listadoEspecialidades = Especialidad::obtenerTodos();
 <head>
 	<title>Listado Especialidades</title>
 	<link rel="stylesheet" type="text/css" href="../../static/css/table.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
 </head>
 <body>
 	<?php
 		require_once "../../menu.php";
 	?>
-	<br><br>
 
+	<br><br>
+	<?php if ($mensaje == ESPECIALIDAD_GUARDADO){ ?>
+			<h3>Especialidad añadida con exito</h3>
+			<br><br>
+	<?php }elseif ($mensaje == ESPECIALIDAD_ACTUALIZADA){ ?>
+		 	<h3>Especialidad actualizada con exito</h3>
+		 	<br><br>
+	<?php } ?>
+
+	<br>
 
 	<table align="center">
 		<caption> Listado Especialidades </caption>
@@ -52,8 +72,7 @@ $listadoEspecialidades = Especialidad::obtenerTodos();
 	<div align="left">
 		<a href="alta.php">
 		<img src="../../imagenes/iconos/add.png">Agregar Nueva Especialidad</a>
+
 	</div>
-
-
 </body>
 </html>

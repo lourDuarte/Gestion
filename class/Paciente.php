@@ -1,14 +1,13 @@
 <?php
 
-require_once "Persona.php";
+require_once 'Persona.php';
 require_once 'MySQL.php';
-//require_once 'ObraSocial.php'
+
 
 class Paciente extends Persona { 
 
 	private $_idPaciente;
 	private $_descripcion;
-   // private $_arrObraSocial = array();
 
 
     /**
@@ -60,6 +59,9 @@ class Paciente extends Persona {
         parent::actualizar();
 
         $sql = "UPDATE Paciente SET descripcion = '$this->_descripcion' WHERE id_paciente = $this->_idPaciente";
+
+        echo $sql;
+
         $mysql = new MySQL();
         $mysql->actualizar($sql);
 
@@ -140,6 +142,9 @@ class Paciente extends Persona {
         $paciente->_tipoDocumento = $data['id_tipo_documento'];
         $paciente->_numeroDocumento = $data['numero_documento'];
         $paciente->_estado = $data['id_estado'];
+        $paciente->setDomicilio();
+        $paciente->setTipoDocumento();
+        $paciente->setContactos();
         return $paciente;
     }
 

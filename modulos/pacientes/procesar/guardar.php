@@ -2,6 +2,8 @@
 
 require_once "../../../class/Paciente.php";
 
+session_start();
+
 $nombre = $_POST['txtNombre'];
 $apellido = $_POST['txtApellido'];
 $fechaNacimiento = $_POST['txtFechaNacimiento'];
@@ -11,9 +13,20 @@ $descripcion = $_POST['txtDescripcion'];
 
 
 if (empty(trim($nombre))) {
-	echo "ERROR NOMBRE VACIO";
+	$_SESSION['mensaje_error']= "ERROR NOMBRE VACIO";
+	header('location:../alta.php');
+	//echo "ERROR NOMBRE VACIO";
 	exit;
 }
+
+if (empty(trim($apellido))) {
+	$_SESSION['mensaje_error']= "ERROR APELLIDO VACIO";
+	header('location:../alta.php');
+	//echo "ERROR NOMBRE VACIO";
+	exit;
+}
+
+
 
 
 $paciente = new Paciente($nombre, $apellido);

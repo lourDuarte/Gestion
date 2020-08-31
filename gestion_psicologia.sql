@@ -5,7 +5,7 @@ SET time_zone = "+00:00";
 create database gestion_psicologia;
 use  gestion_psicologia;
 
-select*from obrasocial
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -31,18 +31,14 @@ CREATE TABLE `persona` (
   primary key (id_persona)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-select*from persona;
-select*from profesional;
-select*from usuario;
+INSERT INTO `persona` (`nombre`, `apellido`, `id_tipo_documento`, `numero_documento`, `fecha_nacimiento`, `id_estado`) VALUES
+('Julia', 'Moendez', 0, '55885', '0000-00-00', 1),
+('Ana', 'Torres', 3, '', '0000-00-00', 1),
+('Carlos', 'Denis', NULL, NULL, NULL, 1),
+('Julia', 'Riquelme', 0, '55885', '0000-00-00', 1),
+('Mario', 'Gamarra', NULL, NULL, NULL, 1),
+('Sara', 'Rodriguez', NULL, NULL, NULL, 1);
 
-select persona.nombre, paciente.descripcion, persona.numero_documento from paciente inner join persona
-on paciente.id_persona = persona.id_persona where paciente.id_paciente = '1';
-
-
-
-SELECT persona.id_persona, persona.nombre, persona.apellido, paciente.id_paciente, paciente.descripcion
-FROM paciente
-INNER JOIN persona ON paciente.id_persona = '1';
 -- --------------------------------------------------------
 
 --
@@ -57,7 +53,9 @@ CREATE TABLE `paciente` (
   primary key(id_paciente)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
+INSERT INTO `paciente` (`id_persona`, `descripcion`) VALUES
+(1, ' '),
+(4,'ninguna');
 -- --------------------------------------------------------
 
 --
@@ -71,7 +69,9 @@ CREATE TABLE `profesional` (
   primary key (id_profesional)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
+INSERT INTO `profesional` (`id_persona`, `matricula`) VALUES
+(2, 268),
+(3,220);
 -- --------------------------------------------------------
 
 --
@@ -83,8 +83,15 @@ CREATE TABLE `usuario` (
   `id_persona` int(11) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
+  `fecha_ultimo_login` datetime DEFAULT NULL,
+  `id_perfil` int(11) NOT NULL,
   primary key(id_usuario)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `usuario` (`id_persona`, `username`, `password`, `fecha_ultimo_login`, `id_perfil`) VALUES
+(5, 'mgamarra', '123456', NULL, 1),
+(6, 'srodriguez', '123456', NULL, 2);
+
 
 
 -- --------------------------------------------------------
@@ -100,12 +107,14 @@ CREATE TABLE `domicilio` (
   `piso` varchar(30) DEFAULT NULL,
   `manzana` varchar(30) DEFAULT NULL,
   `id_persona` int(11) NOT NULL,
-  `id_barrio` int(11) NOT NULL,
   primary key(id_domicilio)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
 -- --------------------------------------------------------
 
+INSERT INTO `domicilio` ( `calle`, `altura`, `piso`, `manzana`, `id_persona`) VALUES
+('Junin', 850, NULL, '300', 1);
 --
 -- Estructura de tabla para la tabla `barrio`
 --
@@ -131,19 +140,43 @@ CREATE TABLE `persona_contacto` (
   `valor` varchar(30) NOT NULL,
   primary key(id_persona_contacto)
   );
-
+INSERT INTO persona_contacto (`id_persona`,`id_tipo_contacto`, `valor`) VALUES 
+(1,1, 3704678952);
+select persona.nombre,persona.id_persona, persona_contacto.id_persona, persona_contacto.valor from persona_contacto inner join
+persona on persona.id_persona=persona_contacto.id_persona;
+select*from persona_contacto;
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tipoContacto`
 --
-  
 CREATE TABLE `tipoContacto` (
   `id_tipo_contacto` int auto_increment not null,
   `descripcion` varchar(30) not null,
   primary key(id_tipo_contacto)
 );
+select*from persona_contacto
+INSERT INTO tipoContacto (`descripcion`) VALUES
+("CELULAR")
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipodocumento`
+--
+
+CREATE TABLE `tipodocumento` (
+  `id_tipo_documento` int auto_increment NOT NULL,
+  `descripcion` varchar(50) NOT NULL,
+  primary key(id_tipo_documento)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+INSERT INTO `tipodocumento` (`id_tipo_documento`, `descripcion`) VALUES
+(1, 'Libreta de Enrolamiento'),
+(2, 'D.N.I.'),
+(3, 'Cedula'),
+(4, 'Pasaporte');
 -- --------------------------------------------------------
 
 --
@@ -152,15 +185,36 @@ CREATE TABLE `tipoContacto` (
 
 CREATE TABLE `especialidad` (
   `id_especialidad` int auto_increment NOT NULL,
-  `tipo` int(11) NOT NULL,
+  `tipo` varchar(25) NOT NULL,
   primary key (id_especialidad)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `especialidad`(`tipo`) VALUES 
+("PSICOANALISIS"),
+("ADOLESCENTES"),
+("NIÑOS");
+select*from especialidad;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `profesional_especialidad`
+
+CREATE TABLE `profesional_especialidad`(
+	`id_especialidad_profesional` int auto_increment NOT NULL,
+    `id_especialidad` int(11) NOT NULL,
+    `id_profesional` int(11) NOT NULL,
+     primary key (id_especialidad_profesional)
+);
+
+INSERT INTO `profesional_especialidad`(`id_especialidad`,`id_profesional` ) VALUES 
+(1,1),
+(2,1),
+(3,1);
+
 -- Estructura de tabla para la tabla `obraSocial`
 --
+        /*$sql = "SELECT id_especialidad, tipo "
+             . " FROM especialidad WHERE id_especialidad = " . $id;*/
 
 CREATE TABLE `obraSocial` (
   `id_obra_social` int auto_increment NOT NULL,
@@ -168,4 +222,64 @@ CREATE TABLE `obraSocial` (
   `co_seguro` int(11) DEFAULT NULL,
   primary key (id_obra_social)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-select*from obrasocial
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `modulo`
+--
+
+CREATE TABLE `modulo` (
+  `id_modulo` int(11) auto_increment NOT NULL,
+  `descripcion` varchar(30) NOT NULL,
+  `directorio` varchar(30) NOT NULL,
+  primary key(id_modulo)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `modulo` (`descripcion`, `directorio`) VALUES
+('Paciente','pacientes'),
+('Profesional','profesional'),
+('Seguridad','seguridad'),
+('Pago','pago'),
+('Turno','turno');
+
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `perfil`
+--
+
+CREATE TABLE `perfil` (
+  `id_perfil` int auto_increment not null,
+  `descripcion` varchar(30) NOT NULL,
+  primary key(id_perfil)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `perfil` (`descripcion`) VALUES
+('ADMINISTRADOR'),
+('ASISTENTE');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `perfil_modulo`
+--
+
+CREATE TABLE `perfil_modulo` (
+  `id_perfil_modulo` int auto_increment NOT NULL,
+  `id_perfil` int(11) NOT NULL,
+  `id_modulo` int(11) NOT NULL,
+  primary key(id_perfil_modulo)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `perfil_modulo` (`id_perfil`,`id_modulo` ) VALUES
+(1,1),
+(1,2),
+(1,3),
+(1,4),
+(1,5),
+(2,2),
+(2,5),
+(2,4);
+
+

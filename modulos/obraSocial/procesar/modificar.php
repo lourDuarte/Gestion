@@ -1,5 +1,7 @@
 <?php
 
+session_start()
+
 require_once '../../../class/ObraSocial.php';
 
 $id= $_POST['txtId'];
@@ -12,7 +14,9 @@ $obraSocial->setCoSeguro($coSeguro);
 
 $obraSocial->actualizar();
 
-highlight_string(var_export($obraSocial,true));
+//highlight_string(var_export($obraSocial,true));
+
+header('location: ../listado.php?mensaje=2');
 
 ?>
 

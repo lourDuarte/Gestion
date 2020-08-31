@@ -2,6 +2,18 @@
 
 require_once '../../class/ObraSocial.php';
 
+CONST SIN_ACCION = 0;
+CONST OBRA_SOCIAL_GUARDADA = 1;
+CONST OBRA_SOCIAL_ACTUALIZADA = 2;
+CONST OBRA_SOCIAL_ELIMNADA = 3;
+
+if (isset($_GET['mensaje'])){
+	$mensaje=$_GET['mensaje'];
+}else {
+	$mensaje = SIN_ACCION;
+} 
+
+
 $listadoObraSocial = ObraSocial::obtenerTodos();
 
 ?>
@@ -11,12 +23,25 @@ $listadoObraSocial = ObraSocial::obtenerTodos();
 <head>
 	<title>Obra Social</title>
 	<link rel="stylesheet" type="text/css" href="../../static/css/table.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
 </head>
 <body>
 	<?php
 		require_once "../../menu.php";
+
 	?>
 	<br><br>
+
+	<?php if ($mensaje == OBRA_SOCIAL_GUARDADA){ ?>
+		  <h3>Obra Social Guardada con Exito</h3>
+		  <br><br>
+	<?php }elseif ($mensaje == OBRA_SOCIAL_ACTUALIZADA){ ?>
+		  <h3>Obra Social Actualizada con Exito</h3>
+		  <br><br>
+	<?php }elseif ($mensaje == OBRA_SOCIAL_ELIMNADA){ ?>
+		  <h3>Obra Social eliminada</h3>
+		  <br><br>
+	<?php } ?>
 
 
 	<table align="center">

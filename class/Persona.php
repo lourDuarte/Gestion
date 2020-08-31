@@ -1,8 +1,10 @@
 <?php
 
-require_once "Mysql.php";
-//require_once 'Domicilio.php';
-//require_once 'Contacto.php';
+require_once 'Mysql.php';
+require_once 'Domicilio.php';
+require_once 'TipoDocumento.php';
+require_once 'Contacto.php';
+
 
 class Persona{
 	protected $_idPersona;
@@ -12,8 +14,10 @@ class Persona{
 	protected $_numeroDocumento;
 	protected $_idTipoDocumento;
 	protected $_estado;
-    //$_arrDomicilio = array();
-    //$_arrContacto = array();
+
+    public $domicilio;
+    public $tipoDocumento;
+    public $arrContactos;
 
 
 	const ACTIVO = 1;
@@ -189,6 +193,24 @@ class Persona{
         $mysql->eliminar($sql);
 
     }
+
+    public function setDomicilio() {
+        $this->domicilio = Domicilio::obtenerPorIdPersona($this->_idPersona);
+    }
+
+    public function setTipoDocumento() {
+        if (!is_null($this->_idTipoDocumento)) {
+            $this->tipoDocumento = TipoDocumento::obtenerPorId($this->_idTipoDocumento);
+        }
+    }
+
+
+    public function setContactos() {
+        $this->arrContactos = Contacto::obtenerPorIdPersona($this->_idPersona);
+    }
+
+
+
 
     public function __toString() {
     	return $this->_nombre . ", " . $this->_apellido;

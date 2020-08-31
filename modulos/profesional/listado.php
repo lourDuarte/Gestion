@@ -23,6 +23,7 @@ $listadoProfesionales = Profesional::obtenerTodos();
 <head>
 	<title>Listado Profesionales</title>
 	<link rel="stylesheet" type="text/css" href="../../static/css/table.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
 </head>
 <body>
 	<?php
@@ -79,6 +80,9 @@ $listadoProfesionales = Profesional::obtenerTodos();
 	<div align="left">
 		<a href="alta.php">
 		<img src="../../imagenes/iconos/add.png">Agregar Nuevo Profesional</a>
+		<br><br>
+		<a href="../especialidad/listado.php">
+		<img src="../../imagenes/iconos/detalle.png">Ver especialidades</a>
 	</div>
 
 

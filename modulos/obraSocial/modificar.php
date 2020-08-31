@@ -13,10 +13,16 @@ $obraSocial= ObraSocial::ObtenerPorId($id);
 <head>
 	<title>Actualizar Obra Social</title>
 	<link rel="stylesheet" type="text/css" href="../../static/css/form.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
 </head>
 <body>
+	<?php require_once "../../menu.php"?>
+
+	<br><br>
 	<form name="frmDatos" method="POST" action="procesar/modificar.php">
 
+	<caption>Actualizar obra Social</caption>
+	<br><br>
 		<input type="hidden" name="txtId" value="<?php echo $obraSocial->getIdObraSocial(); ?>">
 
 		<label>Nombre:</label>

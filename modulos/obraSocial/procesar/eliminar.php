@@ -8,28 +8,8 @@ $obraSocial= ObraSocial::ObtenerPorId($id);
 
 $obraSocial->eliminar();
 
+header('location: ../listado.php?mensaje=3');
+
 
 ?>
 
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-
-	<?php
-
-	require_once "../../../menu.php";
-
-	?>
-
-	<div align="center">
-
-		<?php echo "Eliminado"; ?>
-
-	</div>
-
-</body>
-</html>

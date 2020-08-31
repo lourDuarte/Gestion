@@ -5,12 +5,11 @@ require_once "MySQL.php";
 
 class Domicilio{
 	private $_idDomicilio;
-	private $_torre;
 	private $_piso;
-	private $_sector;
+	private $_altura;
 	private $_manzana;
 	private $_calle;
-	private $_altura;
+    private $_idPersona;
 
 
     /**
@@ -21,25 +20,7 @@ class Domicilio{
         return $this->_idDomicilio;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTorre()
-    {
-        return $this->_torre;
-    }
 
-    /**
-     * @param mixed $_torre
-     *
-     * @return self
-     */
-    public function setTorre($_torre)
-    {
-        $this->_torre = $_torre;
-
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -61,25 +42,6 @@ class Domicilio{
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSector()
-    {
-        return $this->_sector;
-    }
-
-    /**
-     * @param mixed $_sector
-     *
-     * @return self
-     */
-    public function setSector($_sector)
-    {
-        $this->_sector = $_sector;
-
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -141,19 +103,77 @@ class Domicilio{
         return $this;
     }
 
+        /**
+     * @return mixed
+     */
+    public function getIdPersona()
+    {
+        return $this->_idPersona;
+    }
+
+    /**
+     * @param mixed $_idPersona
+     *
+     * @return self
+     */
+    public function setIdPersona($_idPersona)
+    {
+        $this->_idPersona = $_idPersona;
+
+        return $this;
+    }
+
     
    public function guardar() {
-        parent::guardar();
 
-        $sql = "INSERT INTO Domicilio (id_domicilio, id_persona, torre, piso, sector, manzana, calle, altura ) "
-             . "VALUES (NULL, $this->_idPersona, $this->_torre, $this->_piso, $this->_sector, )"
-             .  "( $this->_manzana, $this->_calle, $this->_altura)";
+        $sql = "INSERT INTO Domicilio (id_domicilio, calle, altura, piso, manzana,id_persona) "
+             . "VALUES (NULL, '$this->_calle', $this->_altura, '$this->_piso',"
+             . " '$this->_manzana',$this->_idPersona )";
 
-        echo $sql;
+        //echo $sql;
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
         $this->_idDomicilio = $_idDomicilio;
+    }
+
+    public function actualizar(){
+        $sql= " UPDATE domicilio SET calle = '$this->_calle', altura = $this->_altura, "
+            . " piso ='$this->_piso', manzana = '$this->_manzana' ";
+
+        //echo $sql;
+
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+
+    public static function obtenerPorIdPersona($idPersona) {
+        $sql = " SELECT * FROM domicilio WHERE id_persona = " . $idPersona;
+        //echo $sql;
+
+        $mysql = new MySQL();
+        $datos = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $datos->fetch_assoc();
+        $domicilio = null;
+
+        if ($datos->num_rows > 0) {
+            $domicilio = new Domicilio();
+            $domicilio->_idDomicilio = $data['id_domicilio'];
+            $domicilio->_calle = $data['calle'];
+            $domicilio->_altura = $data['altura'];
+            $domicilio->_piso = $data['piso'];
+            $domicilio->_manzana = $data['manzana'];
+            $domicilio->_idPersona = $data['id_persona'];
+        }
+
+        return $domicilio;
+    }
+
+    public function __toString() {
+        return $this->_calle . " " . $this->_altura;
     }
 
 

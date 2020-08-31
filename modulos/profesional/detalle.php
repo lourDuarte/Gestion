@@ -1,9 +1,11 @@
 <?php
 require_once '../../class/Profesional.php';
 
+
 $id = $_GET['id'];
 
 $profesional= Profesional::obtenerPorId($id);
+
 
 ?>
 
@@ -12,6 +14,7 @@ $profesional= Profesional::obtenerPorId($id);
 <head>
 	<title>Detalle Profesional</title>
 	<link rel="stylesheet" type="text/css" href="../../static/css/table.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
 </head>
 <body>
 	<?php
@@ -46,5 +49,7 @@ $profesional= Profesional::obtenerPorId($id);
 			<td> ACTIVO </td>
 		</tr>
 	</table>
+	<br><br>
 
+</div>
 </body>

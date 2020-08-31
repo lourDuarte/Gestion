@@ -79,12 +79,12 @@ class Especialidad{
 
     private function _generarListadoEspecialidad($datos) {
         $listado = array();
+
         while ($registro = $datos->fetch_assoc()) 
         {
             $especialidad = new Especialidad;
             $especialidad->_idEspecialidad = $registro['id_especialidad'];
             $especialidad->_tipo = $registro['tipo'];
-
 
             $listado[] = $especialidad;
         }
@@ -93,7 +93,7 @@ class Especialidad{
 
 
    public static function obtenerPorId($id) {
-        $sql = "SELECT id_especialidad, tipo "
+        $sql = " SELECT id_especialidad, tipo "
              . " FROM especialidad WHERE id_especialidad = " . $id;
 
         $mysql = new MySQL();
@@ -113,6 +113,8 @@ class Especialidad{
 
         return $especialidad;
     }
+
+
 
     public function __toString() {
         return $this->_tipo;

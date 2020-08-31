@@ -1,6 +1,11 @@
 <?php
 
 require_once '../../class/Paciente.php';
+require_once "../../class/TipoDocumento.php";
+
+
+$listadoDocumento= TipoDocumento::obtenerTodos();
+
 
 $id= $_GET['id'];
 
@@ -13,8 +18,13 @@ $paciente= Paciente::ObtenerPorId($id);
 <head>
 	<title>Actualizar Paciente</title>
 	<link rel="stylesheet" type="text/css" href="../../static/css/form.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
 </head>
 <body>
+	<?php
+		require_once "../../menu.php";
+	?>
+	<br><br>
 	<form name="frmDatos" method="POST" action="procesar/modificar.php">
 
 		<input type="hidden" name="txtId" value="<?php echo $paciente->getIdPaciente(); ?>">
@@ -31,10 +41,16 @@ $paciente= Paciente::ObtenerPorId($id);
 		 <input type="date" name="txtFechaNacimiento" value="<?php echo $paciente->getFechaNacimiento(); ?>">
 		<br><br> 
 
+
 		<label>Tipo Documento: </label>
-		<select name="cboTipoDocumento">
-			 <option value="0">Seleccionar</option>
-		</select>
+			<select name="cboTipoDocumento">
+				<option value="0">Seleccionar</option>
+				<?php foreach ($listadoDocumento as $tipoDocumento): ?>
+					<option value=<?php echo $tipoDocumento->getIdTipoDocumento();?>><?php echo $tipoDocumento; ?> 
+				</option>
+				
+				<?php endforeach ?>
+			</select>
 		<br><br> 
 
 		<label>Numero Documento:</label>

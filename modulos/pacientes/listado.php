@@ -22,6 +22,7 @@ $listaPacientes = Paciente::obtenerTodos();
 <head>
 	<title>Listado Pacientes</title>
 	<link rel="stylesheet" type="text/css" href="../../static/css/table.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
 </head>
 <body>
 	<?php
@@ -59,7 +60,7 @@ $listaPacientes = Paciente::obtenerTodos();
 					<td> <?php echo $paciente->getNombre(); ?> </td>
 					<td> <?php echo $paciente->getApellido(); ?> </td>
 					<td>
-						<a href="detalle.php?id= <?php echo $paciente->getIdPaciente();?>" >
+						<a href="detalle.php?id=<?php echo $paciente->getIdPaciente();?>" >
 							<img src="../../imagenes/iconos/detalle.png" title="ver detalle">
 						</a>
 						<a href="modificar.php?id=<?php echo $paciente->getIdPaciente(); ?>">
@@ -79,6 +80,9 @@ $listaPacientes = Paciente::obtenerTodos();
 	<div align="left">
 		<a href="alta.php">
 		<img src="../../imagenes/iconos/add.png">Agregar Nuevo Paciente</a>
+		<br><br>
+		<a href="../obraSocial/listado.php">
+		<img src="../../imagenes/iconos/detalle.png">Ver obra Sociales</a>
 	</div>
 
 

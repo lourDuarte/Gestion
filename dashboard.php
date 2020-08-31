@@ -17,7 +17,7 @@ $usuario = $_SESSION['usuario'];
 <html>
 <head>
 	<title>Bienvenido</title>
-	<link rel="stylesheet" type="text/css" href="static/css/table.cc">
+	<link rel="stylesheet" type="text/css" href="static/css/table.css">
 </head>
 <body>
 
@@ -27,8 +27,9 @@ $usuario = $_SESSION['usuario'];
 	<div align="center">
 		
 		<h1> Bienvenido <?echo $usuario->getNombre()?> </h1>
+		<br><br>
+		<img src="imagenes/iconos/psychology.png">
 	</div>
-
 
 </body>
 </html>

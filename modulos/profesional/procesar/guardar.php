@@ -2,6 +2,8 @@
 
 require_once "../../../class/Profesional.php";
 
+session_start();
+
 $nombre = $_POST['txtNombre'];
 $apellido = $_POST['txtApellido'];
 $fechaNacimiento = $_POST['txtFechaNacimiento'];
@@ -11,7 +13,29 @@ $matricula = $_POST['txtMatricula'];
 
 
 if (empty(trim($nombre))) {
-	echo "ERROR NOMBRE VACIO";
+	$_SESSION['mensaje_error']= "ERROR NOMBRE VACIO";
+	header('location:../alta.php');
+	//echo "ERROR NOMBRE VACIO";
+	exit;
+}
+
+if (empty(trim($apellido))) {
+	$_SESSION['mensaje_error']= "ERROR APELLIDO VACIO";
+	header('location:../alta.php');
+	//echo "ERROR NOMBRE VACIO";
+	exit;
+}
+
+if (empty(trim($matricula))){
+	$_SESSION['mensaje_error']= "DEBE INGRESAR SU MATRICULA";
+	header('location:../alta.php');
+
+	exit;
+}
+
+if (strlen(trim($matricula)) < 3 ) {
+	$_SESSION['mensaje_error']="LA MATRICULA DEBE TENER 3 CARACTERES";
+	header('location:../alta.php');
 	exit;
 }
 
