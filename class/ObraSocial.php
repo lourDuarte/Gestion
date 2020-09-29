@@ -1,5 +1,5 @@
 <?php
-require_once "MySQL.php";
+require_once 'MySQL.php';
 
 class ObraSocial{
 	private $_idObraSocial;
@@ -14,7 +14,17 @@ class ObraSocial{
     {
         return $this->_idObraSocial;
     }
+    /**
+     * @param mixed $_idObraSocial
+     *
+     * @return self
+     */
+    public function setIdObraSocial($_idObraSocial)
+    {
+        $this->_idObraSocial = $_idObraSocial;
 
+        return $this;
+    }
     /**
      * @return mixed
      */
@@ -106,6 +116,43 @@ class ObraSocial{
     }
 
 
+    public function obtenerOsPorIdProfesional($idProfesional){
+        $sql = " SELECT obraSocial.id_obra_social, obraSocial.nombre, obraSocial.co_seguro "
+             . " FROM obraSocial "
+             . " INNER JOIN profesional_OS ON profesional_OS.id_obra_social = obraSocial.id_obra_social "
+             . " INNER JOIN profesional ON profesional.id_profesional = profesional_OS.id_profesional "
+             . " WHERE profesional.id_profesional = " . $idProfesional;
+
+        $mysql= new MySQL();
+        $datos=$mysql->consultar($sql);
+
+        $mysql->desconectar();
+
+        $listado= self::_generarListadoObraSocial($datos);
+
+        return $listado;
+    }
+
+    public function obtenerOsPorIdPaciente($idPaciente){
+        $sql = " SELECT obraSocial.id_obra_social, obraSocial.nombre, obraSocial.co_seguro "
+             . " FROM obraSocial "
+             . " INNER JOIN paciente_OS ON paciente_OS.id_obra_social = obraSocial.id_obra_social "
+             . " INNER JOIN paciente ON paciente.id_paciente = paciente_OS.id_paciente "
+             . " WHERE paciente.id_paciente = " . $idPaciente;
+
+        $mysql= new MySQL();
+        $datos=$mysql->consultar($sql);
+
+        $mysql->desconectar();
+
+        $listado= self::_generarListadoObraSocial($datos);
+
+        return $listado;
+    }
+
+  
+
+
     private function _generarListadoObraSocial($datos) {
         $listado = array();
         while ($registro = $datos->fetch_assoc()) {
@@ -150,6 +197,8 @@ class ObraSocial{
     public function __toString() {
         return $this->_nombre;
     }
+
+
 
 
 

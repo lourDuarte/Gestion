@@ -1,3 +1,4 @@
+
 <?php
 require_once '../../class/Paciente.php';
 
@@ -21,8 +22,6 @@ $listaPacientes = Paciente::obtenerTodos();
 <html>
 <head>
 	<title>Listado Pacientes</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/table.css">
-	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
 </head>
 <body>
 	<?php
@@ -30,60 +29,69 @@ $listaPacientes = Paciente::obtenerTodos();
 	?>
 	<br><br>
 
+
+	<section id="main-content">
+      <section class="wrapper">
+
 		<?php if ($mensaje == PACIENTE_GUARDADO){ ?>
-				<h3>Paciente Guardado con exito</h3>
-				<br>
+				<h3 >Paciente Guardado con exito</h3>
 				<br>
 		<?php }elseif ($mensaje == PACIENTE_MODIFICADO){ ?>
-				<h3>Paciente Actualizado con exito</h3>
-				<br>
+				<h3 >Paciente Actualizado con exito</h3>
 				<br>
 		<?php }elseif ($mensaje == PACIENTE_ELIMINADO){ ?>
-				<h3>Paciente Actualizado con exito</h3>
-				<br>
-				<br> 
+				<h3>Paciente Actualizado con exito</h3> 
 		<?php } ?>
-
-
-	<table align="center">
-		<caption> Listado Pacientes </caption>
-		<tr>
-			<thead>
-				<th>Nombre</th>
-				<th>Apellido</th>
-				<th>Acciones</th>
-			</thead>
-		</tr>
+        <h3><i class="fa fa-angle-right"></i> Listado Pacientes</h3>
+        <div class="row mt">
+          <div class="col-md-12">
+            <div class="content-panel">
+              <table class="table table-striped table-advance table-hover">
+                <hr>
+                <thead>
+                <tr>
+					<th><i class="fa fa-bullhorn"></i>Nombre</th>
+					<th><i class="fa fa-bullhorn"></i>Apellido</th>
+					<th><i class="fa fa-bullhorn"></i>Acciones</th>
+				</tr>
+				</thead>
+                <tbody>
 
 		<?php foreach ($listaPacientes as $paciente): ?>
 				<tr>
 					<td> <?php echo $paciente->getNombre(); ?> </td>
 					<td> <?php echo $paciente->getApellido(); ?> </td>
 					<td>
-						<a href="detalle.php?id=<?php echo $paciente->getIdPaciente();?>" >
-							<img src="../../imagenes/iconos/detalle.png" title="ver detalle">
+						<a href="detalle.php?id=<?php echo $paciente->getIdPaciente();?>" title="ver detalle">
+							<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
 						</a>
-						<a href="modificar.php?id=<?php echo $paciente->getIdPaciente(); ?>">
-							<img src="../../imagenes/iconos/update.png" title="actualizar">
+						<a href="modificar.php?id=<?php echo $paciente->getIdPaciente(); ?>" title= "actualizar">
+							<button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
 						</a>
-						<a href="procesar/eliminar.php?id=<?php echo $paciente->getIdPaciente(); ?>">
-							<img src="../../imagenes/iconos/delete.png" title="eliminar">
+						<a href="procesar/eliminar.php?id=<?php echo $paciente->getIdPaciente(); ?>" title="eliminar">
+							<button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
 						</a>
 					</td>
 				</tr>
 
 		<?php endforeach ?>
 		</table>
-
-	</table>
-	<br><br>
+	</tbody>
+</table>
+</div>
+</div>
+</div>
 	<div align="left">
-		<a href="alta.php">
-		<img src="../../imagenes/iconos/add.png">Agregar Nuevo Paciente</a>
-		<br><br>
-		<a href="../obraSocial/listado.php">
-		<img src="../../imagenes/iconos/detalle.png">Ver obra Sociales</a>
+		<br>
+		<a href="alta.php"><h4><i class="fa fa-angle-right"></i>
+		Agregar Nuevo Paciente</h4></a>
+		<a href="../obraSocial/listado.php"><h4><i class="fa fa-angle-right"></i>
+		Ver obra Sociales</h4></a>
 	</div>
+
+</section>
+</section>
+
 
 
 </body>

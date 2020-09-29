@@ -1,6 +1,8 @@
 <?php
 
-require_once "../../../class/Profesional.php";
+require_once '../../../class/Profesional.php';
+require_once '../../../class/EspecialidadProfesional.php';
+require_once '../../../class/obraSocialProfesional.php';
 
 session_start();
 
@@ -34,10 +36,18 @@ if (empty(trim($matricula))){
 }
 
 if (strlen(trim($matricula)) < 3 ) {
-	$_SESSION['mensaje_error']="LA MATRICULA DEBE TENER 3 CARACTERES";
+	$_SESSION['mensaje_error'] ="LA MATRICULA DEBE TENER 3 CARACTERES";
 	header('location:../alta.php');
 	exit;
 }
+
+if (strlen(trim($numeroDocumento)) < 7){
+	$_SESSION['mensaje_error'] = "EL NUMERO DE DOCUMENTO CONTENER 8 CARACTERES";
+	header('location:../alta.php');
+	exit;
+}
+
+
 
 
 $profesional = new Profesional($nombre, $apellido);
@@ -48,9 +58,31 @@ $profesional->setMatricula($matricula);
 
 $profesional->guardar();
 
-//highlight_string(var_export($profesional,true));
+highlight_string(var_export($profesional,true));
 
-header('location:../listado.php?mensaje=1');
+//add especialidad
+
+$listaEspecialidad= $_POST['cboEspecialidad'];
+
+foreach ($listaEspecialidad as $especialidad_id) {
+	$especialidadProfesional= new EspecialidadProfesional();
+	$especialidadProfesional->setIdProfesional($profesional->getIdProfesional());
+	$especialidadProfesional->setIdEspecialidad($especialidad_id);
+	$especialidadProfesional->guardar();
+}
+
+//add obra social
+
+$listaObraSocial = $_POST['cboObraSocial'];
+
+foreach ($listaObraSocial as $obraSocial_id) {
+	$obraSocialProfesional= new obraSocialProfesional();
+	$obraSocialProfesional->setIdProfesional($profesional->getIdProfesional());
+	$obraSocialProfesional->setIdObraSocial($obraSocial_id);
+	$obraSocialProfesional->guardar();
+}
+
+//header('location:../listado.php?mensaje=1');
 
 ?>
 

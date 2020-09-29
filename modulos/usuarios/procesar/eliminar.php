@@ -19,24 +19,7 @@ $usuario->getEstado();
 
 $usuario->eliminar();
 
+header('location:../listado.php);
+
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-
-	<?php
-		require_once "../../../menu.php";
-	?>
-	<br><br>
-
-	<div align="center">
-		<?php 
-		echo 'usuario eliminado';
-		?>
-
-</body>
-</html>

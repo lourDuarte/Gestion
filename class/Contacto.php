@@ -145,14 +145,16 @@ class Contacto {
         return $listado;
     }
 
-    public function guardar() {
+    public function guardar(){
 
-        $sql = "INSERT INTO persona_contacto (id_persona_contacto, id_persona,id_tipo_contacto, valor) VALUES (NULL, $this->_idTipoContacto, $this->_idPersona, '$this->_valor')";
+        $sql= " INSERT INTO persona_contacto (id_persona_contacto, id_persona, id_tipo_contacto, valor ) "
+            . " VALUES (NULL,$this->_idPersona, $this->_idTipoContacto, $this->_valor )";
+        //echo $sql;
 
-        $mysql = new MySQL();
+        $mysql= new MySQL;
         $idInsertado = $mysql->insertar($sql);
 
-        $this->_idTipoContactoPersona = $idInsertado;
+        $this->_idPersonaContacto = $idInsertado;
     }
 
     public function actualizar(){

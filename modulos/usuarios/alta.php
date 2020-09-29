@@ -1,45 +1,129 @@
+
+<?php 
+
+require_once '../../class/TipoDocumento.php';
+require_once '../../class/Perfil.php';
+require_once '../../menu.php';
+
+$tipoDocumento = TipoDocumento::obtenerTodos();
+$tipoPerfil= Perfil::obtenerTodos();
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Nuevo Usuario</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/form.css">
+
 </head>
 <body>
-		<form name="frmDatos" method="POST" action = "procesar/guardar.php">
-			<caption> Registro</caption>
-		<br><br>
-			<label>Nombre</label>
-			<input type="text" name="txtNombre">
-		<br><br>
 
-			<label>Apellido:</label>
-			<input type="text" name="txtApellido">
-		<br><br>
+<section id="main-content">
+    <section class="wrapper">
+   <div align="center">
 
-			<label>Username:</label>
-			<input type="text" name="txtUsername">
-		<br><br>
+            <?php if (isset($_SESSION['mensaje_error'])) : ?>
 
-			<label>Password</label>
-			<input type="text" name="txtPassword">
-		<br><br>
+                <font color="red">
+                    <h3><?php echo $_SESSION['mensaje_error'] ?></h3>
+                </font>
 
-			<label>Fecha Nacimiento:</label>
-			<input type="date" name="txtFechaNacimiento">
-		<br><br> 
+                <br><br>
 
-			<label>Tipo Documento: </label>
-			<select name="cboTipoDocumento">
+            <?php
+                    unset($_SESSION['mensaje_error']);
+                endif;
+            ?>
+
+         <div id="mensajeError"></div>
+        </div>
+    <div class="row mt">
+
+      <div class="col-lg-12">
+       <h4><i class="fa fa-angle-right"></i> Nuevo Usuario</h4>
+       <div class="form-panel">
+       <div class=" form">
+       	<br>
+		<form class="cmxform form-horizontal style-form" id="commentForm" name="frmDatos" method="POST" action = "procesar/guardar.php">
+
+		<div class="row mt">
+            <label class="col-lg-2 control-label">Nombre</label>
+            <div class="col-lg-10">
+				<input type="text" name="txtNombre" class="form-control">
+			</div>
+		</div>
+		<div class="row mt">
+            <label class="col-lg-2 control-label">Apellido</label>
+            <div class="col-lg-10">
+				<input type="text" name="txtApellido" class="form-control">
+			</div>
+		</div>
+		<div class="row mt">
+            <label class="col-lg-2 control-label">Username</label>
+            <div class="col-lg-10">
+				<input type="text" name="txtUsername" class="form-control">
+			</div>
+		</div>
+		<div class="row mt">
+            <label class="col-lg-2 control-label">Password</label>
+            <div class="col-lg-10">
+				<input type="text" name="txtPassword" class="form-control">
+			</div>
+		</div>
+		<div class="row mt">
+            <label class="col-lg-2 control-label">Fecha Nacimiento</label>
+             <div class="col-lg-10">
+				<input type="date" name="txtFechaNacimiento" class="form-control">
+			</div>
+		</div> 
+
+		<div class="row mt">
+          <label class="col-lg-2 control-label">Tipo Documento: </label>
+          <div class="col-lg-10">
+			<select name="cboTipoDocumento" id="cboTipoDocumento">
 				<option value="0">Seleccionar</option>
+		<?php foreach ($tipoDocumento as $tipo): ?>
+					<option value=<?php echo $tipo->getIdTipoDocumento();?>><?php echo $tipo; ?> 
+				</option>
+				
+				<?php endforeach ?>
 			</select>
-		<br><br> 
-
-			<label>Numero Documento:</label>
-			<input type="text" name="txtNumeroDocumento">
-		<br><br> 
-
-		<input type="submit" name="btnGuardar" value="Guardar">		
+		</div>
+		</div>
+		<div class="row mt">
+            <label class="col-lg-2 control-label">Numero Documento</label>
+            <div class="col-lg-10">
+				<input type="text" name="txtNumeroDocumento" class="form-control">
+			</div>
+		</div>
+		<div class="row mt">
+          <label class="col-lg-2 control-label">Perfil: </label>
+          <div class="col-lg-10">
+			<select name="cboTipoPerfil" id="cboTipoPerfil">
+				<option value="0">Seleccionar</option>
+		<?php foreach ($tipoPerfil as $perfil): ?>
+					<option value=<?php echo $perfil->getIdPerfil();?>><?php echo $perfil; ?> 
+				</option>
+				
+				<?php endforeach ?>
+			</select>
+		</div>
+		</div>
+		  <div align="left">
+                 
+             <div class="row mt">
+                  <div class="col-lg-offset-2 col-lg-10">
+                   <input type="submit" name="btnGuardar" value="Guardar">
+                   </div>
+                   </div>
+              	</div>
 	</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
 
 </body>
 </html>

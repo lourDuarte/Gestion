@@ -2,6 +2,8 @@
 
 require_once '../../class/Especialidad.php';
 
+$listadoEspecialidades = Especialidad::obtenerTodos();
+
 const SIN_ACCION = 0;
 const ESPECIALIDAD_GUARDADO = 1;
 const ESPECIALIDAD_ACTUALIZADA = 2;
@@ -12,7 +14,7 @@ if (isset($_GET['mensaje'])) {
 	$mensaje = SIN_ACCION;
 }
 
-$listadoEspecialidades = Especialidad::obtenerTodos();
+
 
 ?>
 

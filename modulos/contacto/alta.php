@@ -1,11 +1,14 @@
 <?
 
 
-
+require_once '../../class/TipoContacto.php';
 
 $idPersona = $_GET['idPersona'];
 $idLlamada = $_GET['idLlamada'];
 $moduloLlamada = $_GET['modulo'];
+
+
+$listaTipoContactos = TipoContacto::ObtenerTodos();
 
 ?>
 
@@ -24,7 +27,7 @@ $moduloLlamada = $_GET['modulo'];
 	<br>
 		<h3>Contacto</h3>
 		<br>
-		<form name="frmDatos" method="POST" action="procesar/guardar.php">
+		<form name="frmDatos" id="frmDatos" method="POST" action="procesar/guardar.php">
 
 		    <input type="hidden" name="txtIdPersona" value='<?php echo $idPersona ?>'>
 		    <input type="hidden" name="txtIdLlamada" value='<?php echo $idLlamada ?>'>
@@ -34,9 +37,20 @@ $moduloLlamada = $_GET['modulo'];
 			<input type="text" name="txtValor">
 
 			<br><br>
-			<label>descripcion:</label>
-			<input type="text" name="txtDescripcion">
+			<label>Tipo de Contacto:</label>
+			<select name="cboTipoContacto" id="cboTipoContacto"> 
+				<option value="0">Seleccionar</option>
 
+				<?php foreach($listaTipoContactos as $tipoContacto): ?>
+
+					<option value=<?php echo $tipoContacto->getIdTipoContacto();?> > <?php echo $tipoContacto ?>
+						
+					</option>
+
+				<?php endforeach; ?>
+			</select>
+			<br><br>
+		   	<input type="submit" value="Guardar"> 
 		</form>
 </body>
 </html>

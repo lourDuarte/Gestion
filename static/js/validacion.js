@@ -3,6 +3,7 @@ function validar() {
     var nombre = document.getElementById("txtNombre").value;
     var apellido =document.getElementById("txtApellido").value;
     var matricula = document.getElementById("txtMatricula").value;
+    var obraSocial = document.getElementById("cboObraSocial").value;
 
     if (nombre.trim() == "") {
         divMensajeError.innerHTML = "<font color='red'>El nombre no debe estar vacio</font><br><br>";
@@ -31,3 +32,4 @@ function validar() {
     var form = document.getElementById("frmDatos");
     form.submit();
 }
+

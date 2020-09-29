@@ -1,6 +1,7 @@
 <?php
 
 
+
 $idPersona = $_GET['idPersona'];
 $idLlamada = $_GET['idLlamada'];
 $moduloLlamada = $_GET['modulo'];
@@ -29,7 +30,7 @@ $moduloLlamada = $_GET['modulo'];
 
 	        <label>Calle:</label>
 		    <input type="text" name="txtCalle">
-		    <br><br> <!-- Este es un comentario -->
+		    <br><br> 
 
 		    <label>Altura:</label>
 		    <input type="number" name="txtAltura">

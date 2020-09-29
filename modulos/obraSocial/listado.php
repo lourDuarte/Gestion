@@ -22,17 +22,18 @@ $listadoObraSocial = ObraSocial::obtenerTodos();
 <html>
 <head>
 	<title>Obra Social</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/table.css">
-	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
+
 </head>
 <body>
 	<?php
 		require_once "../../menu.php";
 
 	?>
-	<br><br>
 
-	<?php if ($mensaje == OBRA_SOCIAL_GUARDADA){ ?>
+
+<section id="main-content">
+<section class="wrapper">
+		<?php if ($mensaje == OBRA_SOCIAL_GUARDADA){ ?>
 		  <h3>Obra Social Guardada con Exito</h3>
 		  <br><br>
 	<?php }elseif ($mensaje == OBRA_SOCIAL_ACTUALIZADA){ ?>
@@ -42,42 +43,50 @@ $listadoObraSocial = ObraSocial::obtenerTodos();
 		  <h3>Obra Social eliminada</h3>
 		  <br><br>
 	<?php } ?>
-
-
-	<table align="center">
-		<caption> Listado Obra Sociales </caption>
-		<tr>
-			<thead>
-				<th>Nombre</th>
-				<th>Acciones</th>
-			</thead>
-		</tr>
+ <h3><i class="fa fa-angle-right"></i> Listado Obra Sociales</h3>
+        <div class="row mt">
+          <div class="col-md-12">
+            <div class="content-panel">
+              <table class="table table-striped table-advance table-hover">
+                <hr>
+                <thead>
+                  <tr>
+				<th><i class="fa fa-bullhorn"></i>Nombre</th>
+				<th><i class="fa fa-bullhorn"></i>Acciones</th>
+			</tr>
+                </thead>
+                <tbody>
 
 		<?php foreach ($listadoObraSocial as $obraSocial): ?>
 				<tr>
 					<td> <?php echo $obraSocial->getNombre(); ?> </td>
 					<td>
-						<a href="detalle.php?id=<?php echo $obraSocial->getIdObraSocial(); ?>">
-							<img src="../../imagenes/iconos/detalle.png" title="ver detalle">
+						<a href="detalle.php?id=<?php echo $obraSocial->getIdObraSocial(); ?>" title="ver detalle">
+                      <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
 						</a>
-						<a href="modificar.php?id=<?php echo $obraSocial->getIdObraSocial(); ?>">
-							<img src="../../imagenes/iconos/update.png" title="actualizar">
+						<a href="modificar.php?id=<?php echo $obraSocial->getIdObraSocial(); ?>"title= "actualizar">
+                      <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
 						</a>
-						<a href="procesar/eliminar.php?id=<?php echo $obraSocial->getIdObraSocial(); ?>">
-							<img src="../../imagenes/iconos/delete.png" title="eliminar">
+						<a href="procesar/eliminar.php?id=<?php echo $obraSocial->getIdObraSocial(); ?>" title= "eliminar">
+                      <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
 						</a>
 					</td>
 				</tr>
 
 		<?php endforeach ?>
-		</table>
-
-	</table>
-	<br><br>
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+<br>
 	<div align="left">
-		<a href="alta.php">
-		<img src="../../imagenes/iconos/add.png">Agregar Nueva Obra Social</a>
+		<a href="alta.php"><h4><i class="fa fa-angle-right"></i>Agregar Nueva Obra Social</h4></a>
 	</div>
+
+</section>
+</section>
+
 
 
 </body>

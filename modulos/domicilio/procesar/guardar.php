@@ -13,6 +13,7 @@ $manzana = $_POST['txtManzana'];
 
 
 $domicilio = new Domicilio();
+
 $domicilio->setCalle($calle);
 $domicilio->setAltura($altura);
 $domicilio->setPiso($piso);

@@ -1,6 +1,6 @@
 <?php
 
-require_once "MySQL.php";
+require_once 'MySQL.php';
 
 
 class Domicilio{
@@ -12,6 +12,7 @@ class Domicilio{
     private $_idPersona;
 
 
+
     /**
      * @return mixed
      */
@@ -20,6 +21,17 @@ class Domicilio{
         return $this->_idDomicilio;
     }
 
+    /**
+     * @param mixed $_idDomicilio
+     *
+     * @return self
+     */
+    public function setIdDomicilio($_idDomicilio)
+    {
+        $this->_idDomicilio = $_idDomicilio;
+
+        return $this;
+    }
 
 
     /**
@@ -126,24 +138,23 @@ class Domicilio{
     
    public function guardar() {
 
-        $sql = "INSERT INTO Domicilio (id_domicilio, calle, altura, piso, manzana,id_persona) "
-             . "VALUES (NULL, '$this->_calle', $this->_altura, '$this->_piso',"
-             . " '$this->_manzana',$this->_idPersona )";
+        $sql = " INSERT INTO Domicilio (id_domicilio, calle, altura, piso, manzana, id_persona) "
+             . " VALUES (NULL, '$this->_calle', '$this->_altura' , '$this->_piso', "
+             . " '$this->_manzana', '$this->_idPersona') ";
 
-        //echo $sql;
+        echo $sql;
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
-        $this->_idDomicilio = $_idDomicilio;
+        $this->_idDomicilio = $idInsertado;
     }
 
     public function actualizar(){
-        $sql= " UPDATE domicilio SET calle = '$this->_calle', altura = $this->_altura, "
-            . " piso ='$this->_piso', manzana = '$this->_manzana' ";
-
-        //echo $sql;
-
-        $mysql = new MySQL();
+        $sql= " UPDATE domicilio SET piso ='$this->_piso',altura = '$this->_altura' ," 
+            . " manzana = '$this->_manzana', calle = '$this->_calle' "
+            . " WHERE id_persona = $this->_idPersona ";
+        echo $sql;
+        $mysql= new MySQL;
         $mysql->actualizar($sql);
     }
 
@@ -172,10 +183,12 @@ class Domicilio{
         return $domicilio;
     }
 
-    public function __toString() {
-        return $this->_calle . " " . $this->_altura;
-    }
 
+
+
+    public function __toString() {
+        return $this->_calle . " " . $this->_manzana;
+    }
 
 
 

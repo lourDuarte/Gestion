@@ -2,13 +2,18 @@
 require_once 'Persona.php';
 require_once 'MySQL.php';
 require_once 'Especialidad.php';
-//require_once 'ObraSocial.php';
+require_once 'ObraSocial.php';
 
 class Profesional extends Persona{
 
 	private $_idProfesional;
 	private $_matricula;
-	private $_arrEspecialidad = array();
+    private $_arrEspecialidad;
+    private $_arrObraSocial;
+
+   // private $_agendaProfesional;
+
+
 	//private $_arrObraSocial = array();
 
 
@@ -44,6 +49,8 @@ class Profesional extends Persona{
 
 
 
+
+
    public function guardar() {
         parent::guardar();
 
@@ -51,6 +58,7 @@ class Profesional extends Persona{
              . "VALUES (NULL, $this->_idPersona, $this->_matricula)";
 
         echo $sql;
+        
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
 
@@ -80,6 +88,8 @@ class Profesional extends Persona{
         $mysql->eliminar($sql);
 
     }
+
+
 
     public static function obtenerTodos() {
 
@@ -143,19 +153,61 @@ class Profesional extends Persona{
         $profesional->_tipoDocumento = $data['id_tipo_documento'];
         $profesional->_numeroDocumento = $data['numero_documento'];
         $profesional->_estado = $data['id_estado'];
+        $profesional->setDomicilio();
+        $profesional->setContactos();
+        $profesional->_arrEspecialidad = Especialidad::obtenerEspecialidadPorIdProfesional($profesional->_idProfesional);
+        $profesional->_arrObraSocial = ObraSocial::obtenerOsPorIdProfesional($profesional->_idProfesional);
+        //$profesional->_agendaProfesional = Agenda::obtenerAgendaPorIdProfesional($profesional->_idProfesional)
+
         return $profesional;
     }
 
- 
 
+    public function tieneObraSocial($idObraSocial){
+        $sql = " SELECT * FROM profesional_OS "
+             . " WHERE id_obra_social = $idObraSocial "
+             . " AND id_profesional = $this->_idProfesional ";
 
-    public function getEspecialidad(){
-        return $this->_arrEspecialidad;
+        $mysql= new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        return $result->num_rows > 0;
+
     }
 
+    public function eliminarObraSocial(){
+        $sql= " DELETE FROM profesional_OS WHERE id_profesional = $this->_idProfesional ";
+        $mysql= new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+
+    public function tieneEspecialidad($idEspecialidad){
+        $sql= " SELECT * FROM profesional_especialidad "
+            . " WHERE id_especialidad = $idEspecialidad "
+            . " AND id_profesional = $this->_idProfesional ";
+            
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        return $result->num_rows > 0;
+    }
+ 
+
+        public function eliminarEspecialidad() {
+        $sql = " DELETE FROM profesional_especialidad WHERE id_profesional = $this->_idProfesional";
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
 
 }
 
 
 
 ?>
+
+
+
+

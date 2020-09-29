@@ -2,8 +2,8 @@
 
 require_once 'Mysql.php';
 require_once 'Domicilio.php';
-require_once 'TipoDocumento.php';
 require_once 'Contacto.php';
+require_once 'TipoDocumento.php';
 
 
 class Persona{
@@ -161,9 +161,9 @@ class Persona{
 
 
 	public function guardar() {
-        $sql = "INSERT INTO Persona (id_persona, nombre, apellido,id_tipo_documento, "
-             . "numero_documento, fecha_nacimiento) VALUES (NULL, '$this->_nombre', "
-             . "'$this->_apellido', '$this->_idTipoDocumento', '$this->_numeroDocumento', '$this->_fechaNacimiento')";
+        $sql = " INSERT INTO Persona (id_persona, nombre, apellido,id_tipo_documento, "
+             . " numero_documento, fecha_nacimiento) VALUES (NULL, '$this->_nombre', "
+             . " '$this->_apellido', '$this->_idTipoDocumento', '$this->_numeroDocumento', '$this->_fechaNacimiento')";
 
         //echo $sql;
         $mysql = new MySQL();
@@ -175,7 +175,7 @@ class Persona{
 
     public function actualizar() {
         $sql = "UPDATE Persona SET nombre = '$this->_nombre', apellido = '$this->_apellido', "
-             . "numero_documento = '$this->_numeroDocumento', fecha_nacimiento = '$this->_fechaNacimiento' "
+             ." id_tipo_documento = $this->_idTipoDocumento, numero_documento = '$this->_numeroDocumento', fecha_nacimiento = '$this->_fechaNacimiento' "
              . "WHERE id_persona = $this->_idPersona";
 
         //echo $sql;

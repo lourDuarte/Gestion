@@ -124,8 +124,8 @@ class Usuario extends Persona{
    public function guardar() {
         parent::guardar();
 
-        $sql = "INSERT INTO Usuario (id_usuario, id_persona, username, password) "
-             . "VALUES (NULL, $this->_idPersona, '$this->_username', '$this->_password')";
+        $sql = "INSERT INTO Usuario (id_usuario, id_persona, username, password, id_perfil) "
+             . "VALUES (NULL, $this->_idPersona, '$this->_username', '$this->_password', $this->_idPerfil)";
 
         echo $sql;
         $mysql = new MySQL();
@@ -191,10 +191,9 @@ class Usuario extends Persona{
 
 
    public static function obtenerPorId($id) {
-        $sql = "SELECT persona.id_persona, usuario.id_usuario, persona.nombre, persona.apellido, "
-             . " usuario.username, usuario.password FROM usuario "
+        $sql = " SELECT * FROM usuario "
              . " INNER JOIN persona ON persona.id_persona = usuario.id_persona "
-             . " WHERE usuario.id_usuario = " . $id;
+             . " WHERE id_usuario = " . $id;
 
         //echo $sql;
 
@@ -214,6 +213,11 @@ class Usuario extends Persona{
         $usuario->_idPersona = $data['id_persona'];
         $usuario->_username = $data['username'];
         $usuario->_password = $data['password'];
+        $usuario->_fechaNacimientp = $data['fecha_nacimiento'];
+        $usuario->_tipoDocumento = $data['id_tipo_documento'];
+        $usuario->_numeroDocumento = $data['numero_documento'];
+        $usuario->_idPerfil = $data['id_perfil'];
+        $usuario->_estado = $data['id_estado'];
         return $usuario;
     }
 

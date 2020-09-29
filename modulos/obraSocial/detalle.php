@@ -11,7 +11,7 @@ $obraSocial= ObraSocial::obtenerPorId($id);
 <html>
 <head>
 	<title>Detalle Obra Social</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/table.css">
+
 </head>
 <body>
 	<?php
@@ -19,22 +19,38 @@ $obraSocial= ObraSocial::obtenerPorId($id);
 	?>
 	<br><br>
 
+<section id="main-content">
+		<section class="wrapper">
+ <h3><i class="fa fa-angle-right"></i> <?php echo $obraSocial;?></h3>
+        <div class="row mt">
+          <div class="col-md-12">
+            <div class="content-panel">
+              <table class="table table-striped table-advance table-hover">
+                <hr>
+                <thead>
+                  <tr>
+				<thead>
+					<th>ID Obra Social</th>
+					<th>Nombre</th>
+					<th>CO Seguro</th>
 
-	<table align="center">
-		<caption> Obra Social</caption>
-		<tr>
-			<thead>
-				<th>ID Obra Social</th>
-				<th>Nombre</th>
-				<th>CO Seguro</th>
+			    	</tr>
+                </thead>
+                <tbody>
 
-			</thead>
-
-		<tr>
-			<td> <?php echo $obraSocial->getIdObraSocial(); ?> </td>
-			<td> <?php echo $obraSocial->getNombre(); ?></td>
-			<td> <?php echo $obraSocial->getCoSeguro(); ?></td>
-		</tr>
+			<tr>
+				<td> <?php echo $obraSocial->getIdObraSocial(); ?> </td>
+				<td> <?php echo $obraSocial->getNombre(); ?></td>
+				<td> <?php echo $obraSocial->getCoSeguro(); ?></td>
+			</tr>
+		</tbody>
 	</table>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
 
 </body>

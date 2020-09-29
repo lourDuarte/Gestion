@@ -2,12 +2,15 @@
 
 require_once 'Persona.php';
 require_once 'MySQL.php';
+require_once 'ObraSocial.php';
 
 
 class Paciente extends Persona { 
 
 	private $_idPaciente;
 	private $_descripcion;
+
+    private $_arrObraSocial;
 
 
     /**
@@ -145,7 +148,27 @@ class Paciente extends Persona {
         $paciente->setDomicilio();
         $paciente->setTipoDocumento();
         $paciente->setContactos();
+        $paciente->_arrObraSocial = ObraSocial::obtenerOsPorIdPaciente($paciente->_idPaciente);
         return $paciente;
+    }
+
+ public function tieneObraSocial($idObraSocial){
+        $sql = " SELECT * FROM paciente_OS "
+             . " WHERE id_obra_social = $idObraSocial "
+             . " AND id_paciente = $this->_idPaciente ";
+
+        $mysql= new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        return $result->num_rows > 0;
+
+    }
+
+    public function eliminarObraSocial(){
+        $sql= " DELETE FROM paciente_OS WHERE id_paciente = $this->_idPaciente ";
+        $mysql= new MySQL();
+        $mysql->actualizar($sql);
     }
 
 

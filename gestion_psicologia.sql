@@ -88,6 +88,8 @@ CREATE TABLE `usuario` (
   primary key(id_usuario)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+drop table usuario;
+
 INSERT INTO `usuario` (`id_persona`, `username`, `password`, `fecha_ultimo_login`, `id_perfil`) VALUES
 (5, 'mgamarra', '123456', NULL, 1),
 (6, 'srodriguez', '123456', NULL, 2);
@@ -103,18 +105,17 @@ INSERT INTO `usuario` (`id_persona`, `username`, `password`, `fecha_ultimo_login
 CREATE TABLE `domicilio` (
   `id_domicilio` int auto_increment NOT NULL,
   `calle` varchar(30) DEFAULT NULL,
-  `altura` int(11) DEFAULT NULL,
+  `altura` varchar(30) DEFAULT NULL,
   `piso` varchar(30) DEFAULT NULL,
   `manzana` varchar(30) DEFAULT NULL,
   `id_persona` int(11) NOT NULL,
   primary key(id_domicilio)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
 -- --------------------------------------------------------
-
+select*from domicilio
 INSERT INTO `domicilio` ( `calle`, `altura`, `piso`, `manzana`, `id_persona`) VALUES
-('Junin', 850, NULL, '300', 1);
+('Junin', 850, NULL, '300', 7);
 --
 -- Estructura de tabla para la tabla `barrio`
 --
@@ -140,11 +141,12 @@ CREATE TABLE `persona_contacto` (
   `valor` varchar(30) NOT NULL,
   primary key(id_persona_contacto)
   );
+
+
 INSERT INTO persona_contacto (`id_persona`,`id_tipo_contacto`, `valor`) VALUES 
-(1,1, 3704678952);
-select persona.nombre,persona.id_persona, persona_contacto.id_persona, persona_contacto.valor from persona_contacto inner join
-persona on persona.id_persona=persona_contacto.id_persona;
-select*from persona_contacto;
+(1,2, 3704678952);
+
+
 -- --------------------------------------------------------
 
 --
@@ -155,9 +157,12 @@ CREATE TABLE `tipoContacto` (
   `descripcion` varchar(30) not null,
   primary key(id_tipo_contacto)
 );
-select*from persona_contacto
+
+select*from persona_contacto;
 INSERT INTO tipoContacto (`descripcion`) VALUES
-("CELULAR")
+("CELULAR"),
+("TELEFONO"),
+("CORREO ELECTRONICO");
 
 -- --------------------------------------------------------
 
@@ -183,18 +188,20 @@ INSERT INTO `tipodocumento` (`id_tipo_documento`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `especialidad`
 --
 
-CREATE TABLE `especialidad` (
+CREATE TABLE `Especialidad` (
   `id_especialidad` int auto_increment NOT NULL,
   `tipo` varchar(25) NOT NULL,
   primary key (id_especialidad)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `especialidad`(`tipo`) VALUES 
+INSERT INTO `Especialidad`(`tipo`) VALUES 
 ("PSICOANALISIS"),
 ("ADOLESCENTES"),
 ("NIÑOS");
-select*from especialidad;
+
 -- --------------------------------------------------------
+
+
 
 --
 -- Estructura de tabla para la tabla `profesional_especialidad`
@@ -206,10 +213,8 @@ CREATE TABLE `profesional_especialidad`(
      primary key (id_especialidad_profesional)
 );
 
-INSERT INTO `profesional_especialidad`(`id_especialidad`,`id_profesional` ) VALUES 
-(1,1),
-(2,1),
-(3,1);
+
+
 
 -- Estructura de tabla para la tabla `obraSocial`
 --
@@ -222,6 +227,24 @@ CREATE TABLE `obraSocial` (
   `co_seguro` int(11) DEFAULT NULL,
   primary key (id_obra_social)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `profesional_OS`(
+ `id_obra_social_profesional` int auto_increment not null,
+ `id_obra_social` int (11) not null,
+ `id_profesional` int(11) not null,
+ primary key(id_obra_social_profesional)
+ );
+ 
+ CREATE TABLE `paciente_OS`(
+ `id_obra_social_paciente` int auto_increment not null,
+ `id_obra_social` int (11) not null,
+ `id_paciente` int (11) not null,
+ primary key(id_obra_social_paciente)
+ );
+
+
 -- --------------------------------------------------------
 
 --
@@ -234,6 +257,7 @@ CREATE TABLE `modulo` (
   `directorio` varchar(30) NOT NULL,
   primary key(id_modulo)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+drop table modulo;
 
 INSERT INTO `modulo` (`descripcion`, `directorio`) VALUES
 ('Paciente','pacientes'),
@@ -272,6 +296,8 @@ CREATE TABLE `perfil_modulo` (
   primary key(id_perfil_modulo)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+
 INSERT INTO `perfil_modulo` (`id_perfil`,`id_modulo` ) VALUES
 (1,1),
 (1,2),
@@ -281,5 +307,26 @@ INSERT INTO `perfil_modulo` (`id_perfil`,`id_modulo` ) VALUES
 (2,2),
 (2,5),
 (2,4);
+
+CREATE TABLE `agenda`(
+`id_agenda` int auto_increment NOT NULL,
+`id_profesional` int(11) NOT NULL,
+`hora_desde` time NOT NULL,
+`hora_hasta` time NOT NULL,
+`fecha_desde` date NOT NULL,
+`fecha_hasta` date NOT NULL,
+`duracion` int(11) NOT NULL,
+primary key (id_agenda)
+);
+
+
+CREATE TABLE `agendaDia`(
+`id_agenda` int(11) not null,
+`lunes`  tinyint(1) default null,
+`martes` tinyint(1)   null,
+`miercoles` tinyint(1)  null,
+`jueves` tinyint(1)  null,
+`viernes` tinyint(1)  null
+);
 
 

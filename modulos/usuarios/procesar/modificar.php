@@ -30,26 +30,8 @@ $usuario->actualizar();
 
 //highlight_string(var_export($usuario,true));
 
+header('location:../listado.php');
+
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body background="#ddd">
 
-	<?php
-
-	require_once "../../../menu.php";
-
-	?>
-
-	<div align="center">
-
-		<?php echo "usuario actualizado"; ?>
-
-	</div>
-
-</body>
-</html>

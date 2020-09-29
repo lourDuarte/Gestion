@@ -1,6 +1,7 @@
 <?php
 
 require_once '../../../class/Paciente.php';
+require_once '../../../class/obraSocialPaciente.php';
 
 $id= $_POST['txtId'];
 $nombre = $_POST['txtNombre'];
@@ -27,7 +28,18 @@ $paciente->setDescripcion($descripcion);
 
 $paciente->actualizar();
 
-highlight_string(var_export($paciente,true));
+//highlight_string(var_export($paciente,true));
+
+$listaObraSocial = $_POST ['cboObraSocial'];
+
+$paciente->eliminarObraSocial();
+
+foreach ($listaObraSocial as $obraSocial_id){
+	$obraSocialPaciente = new obraSocialPaciente();
+	$obraSocialPaciente->setIdPaciente($paciente->getIdPaciente());
+	$obraSocialPaciente->setIdObraSocial($obraSocial_id);
+	$obraSocialPaciente->guardar(); 
+}
 
 
 header('location: ../listado.php?mensaje=2');

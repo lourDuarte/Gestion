@@ -1,7 +1,8 @@
 <?php
 
-require_once '../../class/Profesional.php';
 
+require_once '../../class/Profesional.php';
+require_once '../../menu.php';
 const SIN_ACCION = 0;
 const PROFESIONAL_GUARDADO = 1;
 const PROFESIONAL_MODIFICADO = 2;
@@ -16,75 +17,84 @@ if (isset($_GET['mensaje'])) {
 
 $listadoProfesionales = Profesional::obtenerTodos();
 
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Listado Profesionales</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/table.css">
-	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
+	<title></title>
 </head>
 <body>
-	<?php
-		require_once "../../menu.php";
-	?>
-	<br><br>
+	<section id="main-content">
+		<section class="wrapper">
+
 
 		<?php if ($mensaje == PROFESIONAL_GUARDADO){ ?>
 				<h3>Profesional Guardado con exito</h3>
-				<br><br>
+				<br>
 		<?php }elseif ($mensaje == PROFESIONAL_MODIFICADO){ ?>
 				<h3>Profesional Actualizado con exito</h3>
-				<br><br>
+				<br>
 		<?php }elseif ($mensaje == PROFESIONAL_ELIMINADO){?>
 				<h3>Profesional Eliminado</h3>
 		<?php } ?>
 
+      
+        <h3><i class="fa fa-angle-right"></i> Listado Profesionales</h3>
+        <div class="row mt">
+          <div class="col-md-12">
+            <div class="content-panel">
+              <table class="table table-striped table-advance table-hover">
+                <hr>
+                <thead>
+                  <tr>
+                    <th><i class="fa fa-bullhorn"></i> Nombre</th>
+                    <th><i class="fa fa-bookmark"></i> Apellido</th>
+                    <th><i class=" fa fa-edit"></i> Acciones</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($listadoProfesionales as $profesional): ?>
+                  <tr>
+
+                    <td><?php echo $profesional->getNombre(); ?> </td>
+                    <td> <?php echo $profesional->getApellido(); ?></td>
+                    <td>
+                    <a href="detalle.php?id=<?php echo $profesional->getIdProfesional(); ?>" title="ver detalle">
+                      <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
+                    </a>
+                    <a href="modificar.php?id=<?php echo $profesional->getIdProfesional(); ?>" title= "actualizar">
+                      <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                    </a>
+                    <a href="procesar/eliminar.php?id=<?php echo $profesional->getIdProfesional(); ?>" title= "eliminar">
+                      <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                    </a>
+                    </td>
+
+                  </tr>
+                 <?php endforeach;?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+                  <div >
+      <a href="alta.php"><h4><i class="fa fa-angle-right"></i>
+    Nuevo profesional</h4></a>
+    
+    <a href="../especialidad/listado.php"><h4><i class="fa fa-angle-right"></i>
+     Especialidades</h4></a>
+  </div> 
+       	
 
 
-	<table align="center">
-		<caption> Listado Profesionales </caption>
-		<tr>
-			<thead>
-				<th>Nombre</th>
-				<th>Apellido</th>
-				<th>Matricula</th>
-				<th>Acciones</th>
-			</thead>
-		</tr>
+      </section>
 
-		<?php foreach ($listadoProfesionales as $profesional): ?>
-				<tr>
-					<td> <?php echo $profesional->getNombre(); ?> </td>
-					<td> <?php echo $profesional->getApellido(); ?> </td>
-					<td> <?php echo $profesional->getMatricula(); ?> </td>
-					<td>
-						<a href="detalle.php?id=<?php echo $profesional->getIdProfesional(); ?>">
-							<img src="../../imagenes/iconos/detalle.png" title="ver detalle">
-						</a>
-						<a href="modificar.php?id=<?php echo $profesional->getIdProfesional(); ?>">
-							<img src="../../imagenes/iconos/update.png" title="actualizar">
-						</a>
-						<a href="procesar/eliminar.php?id=<?php echo $profesional->getIdProfesional(); ?>">
-							<img src="../../imagenes/iconos/delete.png" title="eliminar">
-						</a>
-					</td>
-				</tr>
+    </section>
 
-		<?php endforeach ?>
-		</table>
-
-	</table>
-	<br><br>
-	<div align="left">
-		<a href="alta.php">
-		<img src="../../imagenes/iconos/add.png">Agregar Nuevo Profesional</a>
-		<br><br>
-		<a href="../especialidad/listado.php">
-		<img src="../../imagenes/iconos/detalle.png">Ver especialidades</a>
-	</div>
-
+   
 
 </body>
 </html>

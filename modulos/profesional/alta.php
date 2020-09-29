@@ -4,7 +4,15 @@
 
 require_once '../../class/TipoDocumento.php';
 
+require_once '../../class/Especialidad.php';
+
+require_once '../../class/ObraSocial.php';
+
 $listadoTipoDocumento = TipoDocumento::obtenerTodos();
+
+$listaEspecialidad= Especialidad::ObtenerTodos();
+
+$listaObraSocial = ObraSocial::obtenerTodos();
 
 
 
@@ -14,15 +22,13 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 <html>
 <head>
 	<title>Nuevo Profesional</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/form.css">
-	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
 
 	<script type="text/javascript" src="../../satic/js/validacion.js"></script>
     <script type="text/javascript">
 
         function soloNumeros(e){
             var key = e.charCode;
-            console.log(key); 
+             
             if(key >= 48 && key <= 57){ //se utiliza codigo ASCII
                  return key;
             }else{
@@ -38,14 +44,19 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 	<?php
 		require_once "../../menu.php";
 	?>
-	<br><br>
 
-        <div align="center">
+        
+         <br>
+
+	<section id="main-content">
+
+    <section class="wrapper">
+          <div align="center">
 
             <?php if (isset($_SESSION['mensaje_error'])) : ?>
 
                 <font color="red">
-                    <?php echo $_SESSION['mensaje_error'] ?>
+                    <h3><?php echo $_SESSION['mensaje_error'] ?></h3>
                 </font>
 
                 <br><br>
@@ -56,26 +67,40 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
             ?>
 
          <div id="mensajeError"></div>
+        </div>
+    <div class="row mt">
 
-		<caption> Nuevo Profesional</caption>
+      <div class="col-lg-12">
+       <h4><i class="fa fa-angle-right"></i> Nuevo Profesional</h4>
+       <br>
+       <div class="form-panel">
+       <div class=" form">
+       	<br>
+		<form class="cmxform form-horizontal style-form" id="commentForm" name="frmDatos" method="POST" action = "procesar/guardar.php">
 
-		<br><br>
-		<form name="frmDatos" id="frmDatos" method="POST" action = "procesar/guardar.php">
+		<div class="row mt">
+            <label class="col-lg-2 control-label">Nombre</label>
+            <div class="col-lg-10">
+				<input type="text" name="txtNombre" class="form-control">
+			</div>
+		</div>
+		<div class="row mt">
+            <label class="col-lg-2 control-label">Apellido</label>
+            <div class="col-lg-10">
+				<input type="text" name="txtApellido" class="form-control">
+			</div>
+		</div>
+			<div class="row mt">
+            <label class="col-lg-2 control-label">Fecha Nacimiento</label>
+             <div class="col-lg-10">
+				<input type="date" name="txtFechaNacimiento" class="form-control">
+			</div>
+			</div> 
 
-			<label>Nombre</label>
-			<input type="text" name="txtNombre" id="txtNombre">
-		<br><br>
-
-			<label>Apellido:</label>
-			<input type="text" name="txtApellido" id="txtApellido">
-		<br><br>
-
-			<label>Fecha Nacimiento:</label>
-			<input type="date" name="txtFechaNacimiento">
-		<br><br> 
-
-			<label>Tipo Documento: </label>
-			<select name="cboTipoDocumento">
+			<div class="row mt">
+			<label class="col-lg-2 control-label">Tipo Documento: </label>
+			<div class="col-lg-10">
+			<select name="cboTipoDocumento" id="cboTipoDocumento">
 			    <option value="0">Seleccionar</option>
 
 				<?php foreach ($listadoTipoDocumento as $tipoDocumento): ?>
@@ -87,18 +112,58 @@ $listadoTipoDocumento = TipoDocumento::obtenerTodos();
 				<?php endforeach ?>
 
 			</select>
-		<br><br> 
+		</div>
+			</div> 
+		<div class="row mt">
+            <label class="col-lg-2 control-label">Numero Documento</label>
+            <div class="col-lg-10">
+				<input type="text" name="txtNumeroDocumento" class="form-control" id="txtNumeroDocumento">
+			</div>
+		</div>
+		<div class="row mt">
+			<label class="col-lg-2 control-label">Matricula:</label>
+			<div class="col-lg-10">
+			<input type="text" name="txtMatricula" id="txtMatricula" onkeypress="return soloNumeros(event);" onpaste="return false" class="form-control">
+		</div>
+		</div>
+        <div class="row mt">
+             <label class="col-lg-2 control-label">Especialidad: </label>
+              <div class="col-lg-10">
+              <select name= "cboEspecialidad[]" multiple style="width: 150px; height: 150px;">
+                  <?php foreach($listaEspecialidad as $especialidad): ?>
+                    <option value="<?php echo $especialidad->getIdEspecialidad();?>"><?php echo $especialidad?></option>
+                  <?php endforeach?>
+                </select>
+                </div>
+              </div>
 
-			<label>Numero Documento:</label>
-			<input type="text" name="txtNumeroDocumento">
-		<br><br> 
+               <div class="row mt">
+             <label class="col-lg-2 control-label">Obra Sociales admitidas: </label>
+              <div class="col-lg-10">
+              <select name= "cboObraSocial[]" multiple style="width: 150px; height: 150px;">
+                  <?php foreach($listaObraSocial as $obraSocial): ?>
+                    <option value="<?php echo $obraSocial->getIdObraSocial();?>"><?php echo $obraSocial?></option>
+                  <?php endforeach?>
+                </select>
+                </div>
+              </div>
 
-			<label>Matricula:</label>
-			<input type="text" name="txtMatricula" id="txtMatricula" onkeypress="return soloNumeros(event);" onpaste="return false">
-		<br><br> 
 
-		<input type="submit" name="btnGuardar" value="Guardar" onclick="validar();">		
+		 <div align="left">    
+             <div class="row mt">
+                  <div class="col-lg-offset-2 col-lg-10">
+                   <input type="submit" name="btnGuardar"value="Guardar" onclick="validar();">
+                   </div>
+                   </div>
+              	</div>
+	
 	</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
 
 </body>
 </html>

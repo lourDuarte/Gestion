@@ -1,6 +1,8 @@
 
 <?php
 require_once "class/Usuario.php";
+require_once "menu.php"; 
+
 
 session_start();
 
@@ -16,20 +18,27 @@ $usuario = $_SESSION['usuario'];
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Bienvenido</title>
-	<link rel="stylesheet" type="text/css" href="static/css/table.css">
+  <title></title>
+
 </head>
+
+
 <body>
+	
+	<section id= "main-content">
+		<section class="wrapper">
+        <div class="row">
+          <div class="col-lg-9 main-chart">
+            <!--CUSTOM CHART START -->
+            <div class="border-head">
+              <h3>Bienvenido</h3>
+             
+            </div>
 
-	<?php require_once "menu.php"; ?>
 
-	<br><br>
-	<div align="center">
-		
-		<h1> Bienvenido <?echo $usuario->getNombre()?> </h1>
-		<br><br>
-		<img src="imagenes/iconos/psychology.png">
-	</div>
+	</section>
+
 
 </body>
+
 </html>

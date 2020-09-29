@@ -12,30 +12,51 @@ $obraSocial= ObraSocial::ObtenerPorId($id);
 <html>
 <head>
 	<title>Actualizar Obra Social</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/form.css">
-	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
+
 </head>
 <body>
 	<?php require_once "../../menu.php"?>
+	<section id="main-content">
+		<section class="wrapper">
+	<div class="row mt">
 
-	<br><br>
-	<form name="frmDatos" method="POST" action="procesar/modificar.php">
+      <div class="col-lg-12">
+       <h4><i class="fa fa-angle-right"></i> Actualizar Obra Social</h4>
+       <div class="form-panel">
+       <div class=" form">
+       	<br>
+		<form class="cmxform form-horizontal style-form" id="commentForm" name="frmDatos" method="POST" action = "procesar/modificar.php">
+			<input type="hidden" name="txtId" value="<?php echo $obraSocial->getIdObraSocial(); ?>">
+			<div class="row mt">
 
-	<caption>Actualizar obra Social</caption>
-	<br><br>
-		<input type="hidden" name="txtId" value="<?php echo $obraSocial->getIdObraSocial(); ?>">
+	          <label class="col-lg-2 control-label">Nombre</label>
+               <div class="col-lg-10">
+				<input type="text" name="txtNombre" id="txtNombre" value="<?php echo $obraSocial->getNombre();?>"class="form-control">
+				</div>
+				</div>
+			<div class="row mt">
+			<label class="col-lg-2 control-label">Co Seguro:</label>
+			<div class="col-lg-10">
+			<input type="text" name="txtCoSeguro" value="<?php echo $obraSocial->getCoSeguro();?>"class="form-control">
+			</div>
+			</div>
 
-		<label>Nombre:</label>
-		<input type="text" name="txtNombre" value="<?php echo $obraSocial->getNombre(); ?>">
-		<br><br>
-
-		<label>Co Seguro:</label>
-		<input type="text" name="txtCoSeguro" value="<?php echo $obraSocial->getCoSeguro(); ?>">
-		<br><br>
-		 
-		
-		 <input type="submit" name="btnGuardar" value="Actualizar">	
-	</form>
+		 <div align="left">
+                 
+                  <div class="row mt">
+                  <div class="col-lg-offset-2 col-lg-10">
+                   <input type="submit" name="btnGuardar" value="Actualizar">
+                   </div>
+                   </div>
+              	</div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+</section>
+</section>
 
 </body>
 </html>
+<input type="hidden" name="txtId" value="<?php echo $obraSocial->getIdObraSocial(); ?>">

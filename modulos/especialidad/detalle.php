@@ -1,12 +1,11 @@
 <?php
 
-require_once '../../class/Profesional.php';
 require_once '../../class/Especialidad.php';
+//require_once '../../class/TipoEspecialidad.php';
 
 $id=$_GET['id'];
 
-$especialidad= Especialidad::obtenerPorId($id);
-$profesionales=Profesional::obtenerTodos();
+$especialidad=Especialidad::obtenerPorId($id);
 
 ?>
 
@@ -25,19 +24,19 @@ $profesionales=Profesional::obtenerTodos();
 
 
 	<table align="center">
-		<caption> Profesionales con atencion en <?php echo $especialidad->getTipo(); ?> </caption>
+		<h3> Detalle Especialidad</h3>
 		<tr>
 			<thead>
-				<th>Profesional</th>
-				<th>Estado</th>
+				<th>Id Especialidad</th>
+				<th>Tipo</th>
 			</thead>
-		<?php
-			foreach ($profesionales as $profesional): ?>
+
+
 			<tr>
-				<td> <?php echo $profesional->getNombre()." ". $profesional->getApellido(); ?></td>
-				<td> <?php echo $profesional->getEstado(); ?></td>	
+				<td> <?php echo $especialidad->getIdEspecialidad(); ?></td>
+				<td> <?php echo $especialidad->getTipo(); ?></td>	
 			</tr>
-		<?php endforeach ?>
+
 
 	</table>
 

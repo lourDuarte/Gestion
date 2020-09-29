@@ -1,9 +1,11 @@
 <?php
-require_once "MySQL.php";
+require_once 'MySQL.php';
 
-class Especialidad{
+class Especialidad
+{
 	private $_idEspecialidad;
 	private $_tipo;
+
 
     /**
      * @return mixed
@@ -12,7 +14,17 @@ class Especialidad{
     {
         return $this->_idEspecialidad;
     }
+    /**
+     * @param mixed $_idEspecialidad
+     *
+     * @return self
+     */
+    public function setIdEspecialidad($_idEspecialidad)
+    {
+        $this->_idEspecialidad = $_idEspecialidad;
 
+        return $this;
+    }
     /**
      * @return mixed
      */
@@ -92,6 +104,8 @@ class Especialidad{
     }
 
 
+
+
    public static function obtenerPorId($id) {
         $sql = " SELECT id_especialidad, tipo "
              . " FROM especialidad WHERE id_especialidad = " . $id;
@@ -114,12 +128,30 @@ class Especialidad{
         return $especialidad;
     }
 
+    public function obtenerEspecialidadPorIdProfesional($idProfesional){
 
+        $sql= " SELECT especialidad.id_especialidad, especialidad.tipo "
+            . " FROM especialidad "
+            . " INNER JOIN profesional_especialidad ON profesional_especialidad.id_especialidad = especialidad.id_especialidad "
+            . " INNER JOIN profesional ON profesional.id_profesional = profesional_especialidad.id_profesional "
+            . " WHERE profesional.id_profesional = " . $idProfesional;
+
+        $mysql= new MySQL();
+        $datos=$mysql->consultar($sql);
+
+        $mysql->desconectar();
+
+        $listado= self::_generarListadoEspecialidad($datos);
+
+        return $listado;
+    }
 
     public function __toString() {
         return $this->_tipo;
 
     }
+
+
 
 }
 
