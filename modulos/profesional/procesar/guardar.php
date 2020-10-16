@@ -58,7 +58,7 @@ $profesional->setMatricula($matricula);
 
 $profesional->guardar();
 
-highlight_string(var_export($profesional,true));
+//highlight_string(var_export($profesional,true));
 
 //add especialidad
 
@@ -82,7 +82,7 @@ foreach ($listaObraSocial as $obraSocial_id) {
 	$obraSocialProfesional->guardar();
 }
 
-//header('location:../listado.php?mensaje=1');
+header('location:../listado.php?mensaje=1');
 
 ?>
 

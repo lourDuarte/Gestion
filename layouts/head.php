@@ -26,15 +26,16 @@
 
 
     <!-- js placed at the end of the document so the pages load faster -->
-  <!--<script src="/programacion3/Gestion/static/template/lib/jquery/jquery.min.js"></script>
+  <script src="/programacion3/Gestion/static/template/lib/jquery/jquery.min.js"></script>
   <script src="/programacion3/Gestion/static/template/lib/bootstrap/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="/programacion3/Gestion/static/template/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/programacion3/Gestion/static/template/lib/jquery.scrollTo.min.js"></script>
   <script src="/programacion3/Gestion/static/template/lib/jquery.nicescroll.js" type="text/javascript"></script>
-  <!-common script for all pages-->
-  <!--<script src="/programacion3/Gestion/static/template/lib/common-scripts.js"></script>
-  <!-script for this page-->
-  <!--<script src="/programacion3/Gestion/static/template/lib/jquery-ui-1.9.2.custom.min.js"></script>
+
+  <!--common script for all pages-->
+ <!-- <script src="/programacion3/Gestion/static/template/lib/common-scripts.js"></script>-->
+  <!--script for this page-->
+  <script src="/programacion3/Gestion/static/template/lib/jquery-ui-1.9.2.custom.min.js"></script>
   <script type="text/javascript" src="/programacion3/Gestion/static/template/lib/bootstrap-fileupload/bootstrap-fileupload.js"></script>
   <script type="text/javascript" src="/programacion3/Gestion/static/template/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
   <script type="text/javascript" src="/programacion3/Gestion/static/template/lib/bootstrap-daterangepicker/date.js"></script>
@@ -44,7 +45,22 @@
   <script type="text/javascript" src="/programacion3/Gestion/static/template/lib/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
   <script src="/programacion3/Gestion/static/template/lib/advanced-form-components.js"></script> 
 
-  <!-Template Name: Dashio
+
+    <!-- js placed at the end of the document so the pages load faster -->
+  <!--<script src="static/templatelib/jquery/jquery.min.js"></script>
+  <script src="/programacion3/Gestion/static/template/lib/jquery-ui-1.9.2.custom.min.js"></script>
+  <script src="/programacion3/Gestion/static/template/lib/fullcalendar/fullcalendar.min.js"></script>
+  <script src="/programacion3/Gestion/static/template/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script class="include" type="text/javascript" src="/programacion3/Gestion/static/template/lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="/programacion3/Gestion/static/template/lib/jquery.scrollTo.min.js"></script>
+  <script src="/programacion3/Gestion/static/template/lib/jquery.nicescroll.js" type="text/javascript"></script>
+  
+  common script for all pages-->
+  
+  <!--<script src="/programacion3/Gestion/static/template/lib/common-scripts.js"></script>
+  <script src="/programacion3/Gestion/static/template/lib/calendar-conf-events.js"></script>
+
+Template Name: Dashio
     Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
     Author: TemplateMag.com
     License: https://templatemag.com/license/

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Mysql.php';
+require_once 'Turno.php';
 //require_once 'Profesional.php';
 //require_once 'EstadoAgenda.php';
 
@@ -11,15 +12,19 @@ class Agenda{
 
 	private $_idAgenda;
 	private $_idProfesional;
-	//private $_idEstado;
 	private $_horaDesde;
 	private $_horaHasta;
-	private $_fechaDesde;
+	private $_fechaDesde ;
 	private $_fechaHasta;
 	private $_duracion;
+    
+    private $_generado;
+   
+  
 
 	private $_arrDias;
 
+   
     /**
      * @return mixed
      */
@@ -162,14 +167,16 @@ class Agenda{
 
         return $this;
     }
+   
 
+    
     public function guardar(){
 
-    	$sql = " INSERT INTO agenda (id_agenda,id_profesional,hora_desde,hora_hasta,fecha_desde,fecha_hasta,duracion) "
+    	$sql = " INSERT INTO agenda (id_agenda,id_profesional,hora_desde,hora_hasta,fecha_desde,fecha_hasta,duracion, generado) "
     		. " VALUES (NULL, $this->_idProfesional, '$this->_horaDesde', '$this->_horaHasta', "
-    		. " '$this->_fechaDesde', '$this->_fechaHasta', $this->_duracion) ";
+    		. " '$this->_fechaDesde', '$this->_fechaHasta', $this->_duracion, NULL) ";
 
-    	echo $sql;
+    	//echo $sql;
 
     	$mysql = new MySQL();
 
@@ -180,13 +187,30 @@ class Agenda{
 
     public function actualizar(){
         $sql= " UPDATE agenda SET hora_desde = '$this->_horaDesde', hora_hasta = '$this->_horaHasta', "
-            . " fecha_desde = '$this->_fechaDesde', fecha_hasta = '$this->_fechaHasta', duracion = $this->_duracion";
+            . " fecha_desde = '$this->_fechaDesde', fecha_hasta = '$this->_fechaHasta', duracion = $this->_duracion"
+            . " WHERE id_agenda = $this->_idAgenda ";
         //echo $sql;
 
         $mysql = new MySQL();
         $mysql->actualizar($sql);
     }
 
+    public function actualizarGenerador(){
+        $sql= " UPDATE agenda SET generado = $this->_generado WHERE id_agenda = $this->_idAgenda ";
+        echo $sql;
+        $mysql = new MySQL();
+        $mysql->actualizar($sql);
+    }
+
+    public function eliminar(){
+        $sql = " DELETE FROM agenda "
+            . " INNER JOIN agendaDia ON agenda.id_agenda = agendaDia.id_agenda "
+            . " WHERE agenda.id_agenda = $this->_idAgenda ";
+
+        $mysql= new MySQL();
+        $mysql->eliminar($sql);
+
+    }
 
 
     public function obtenerTodos(){
@@ -215,6 +239,7 @@ class Agenda{
     		$agenda->_fechaDesde = $registro['fecha_desde'];
     		$agenda->_fechaHasta = $registro ['fecha_hasta'];
     		$agenda->_duracion = $registro ['duracion'];
+            $agenda->_generado = $registro ['generado'];
     		$listado[] = $agenda;
     	}
 
@@ -225,7 +250,7 @@ class Agenda{
     	$sql= " SELECT * FROM agenda "
     		. " WHERE id_agenda = ". $id;
 
-    	$mysql= new MySQL();
+    	$mysql = new MySQL();
     	$result = $mysql->consultar($sql);
     	$mysql->desconectar();
 
@@ -248,6 +273,7 @@ class Agenda{
     	$agenda->_fechaDesde = $data['fecha_desde'];
     	$agenda->_fechaHasta = $data['fecha_hasta'];
     	$agenda->_duracion = $data['duracion'];
+        $agenda->_generado = $data['generado'];
         $agenda->_arrDias = AgendaDia::obtenerDiasPorIdAgenda($agenda->_idAgenda); 
     	return $agenda;
 
@@ -275,8 +301,12 @@ class Agenda{
         $mysql->actualizar($sql);
     }
 
+    public function aplicar($id)
+    {
+       $aplicarAgenda=Turno::generar($id);
 
- 
+    }
+   
 
 
 
@@ -285,6 +315,36 @@ class Agenda{
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getGenerado()
+    {
+        return $this->_generado;
+    }
+
+    /**
+     * @param mixed $_generado
+     *
+     * @return self
+     */
+    public function setGenerado($_generado)
+    {
+        $this->_generado = $_generado;
+
+        return $this;
+    }
 }
 
 ?>

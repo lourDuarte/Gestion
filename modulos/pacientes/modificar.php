@@ -62,12 +62,21 @@ $paciente= Paciente::ObtenerPorId($id);
           <label class="col-lg-2 control-label">Tipo Documento: </label>
           <div class="col-lg-10">
 		<select name="cboTipoDocumento" id="cboTipoDocumento">
+      
 			<option value="0">Seleccionar</option>
-				<?php foreach ($listadoDocumento as $tipoDocumento): ?>
-					<option value=<?php echo $tipoDocumento->getIdTipoDocumento();?>><?php echo $tipoDocumento; ?> 
-				</option>
-				
-				<?php endforeach ?>
+		  <?php
+        foreach ($listadoDocumento as $tipoDocumento):
+             $selected = '';
+              if ($paciente->getIdTipoDocumento() == $tipoDocumento->getIdTipoDocumento()){
+                $selected = "SELECTED";
+              }
+            
+      ?>
+
+      <option value="<?php echo $tipoDocumento->getIdTipoDocumento(); ?>" <?php echo $selected; ?>>
+      <?php echo $tipoDocumento; ?>
+      </option>
+      <?php endforeach ?>
 			
 		</select>
 		</div>

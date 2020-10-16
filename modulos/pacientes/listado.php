@@ -85,8 +85,7 @@ $listaPacientes = Paciente::obtenerTodos();
 		<br>
 		<a href="alta.php"><h4><i class="fa fa-angle-right"></i>
 		Agregar Nuevo Paciente</h4></a>
-		<a href="../obraSocial/listado.php"><h4><i class="fa fa-angle-right"></i>
-		Ver obra Sociales</h4></a>
+
 	</div>
 
 </section>

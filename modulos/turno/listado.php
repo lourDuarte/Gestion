@@ -1,76 +1,71 @@
+
 <?php
-
-require_once '../../class/Agenda.php';
-//require_once '../../class/Profesional.php';
 require_once '../../menu.php';
+require_once '../../class/Profesional.php';
 
 
-$listadoAgenda = Agenda::obtenerTodos();
+$listadoProfesionales=Profesional::obtenerTodos();
 
 
-//$profesional = obtenerPorId($agenda->getIdProfesional());
 
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Listado Agendas</title>
+	<title></title>
+
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="/programacion3/Gestion/static/lib/select/select2.min.js"></script>
+	
+
 </head>
+
+
 <body>
-	<section id="main-content">
-		<section class="wrapper">
- <h3><i class="fa fa-angle-right"></i> Agendas</h3>
-        <div class="row mt">
-          <div class="col-md-12">
-            <div class="content-panel">
-              <table class="table table-striped table-advance table-hover">
-                <hr>
-                <thead>
-                  <tr>
-                  	<th><i class="fa fa-edit"></i>Agenda</th>
-                    <th><i class=" fa fa-edit"></i> Acciones</th>
+<section id="main-content">
+	<section class="wrapper">
+<br><br>
+
+<form class="cmxform form-horizontal style-form" id="commentForm" name="frmDatos" method="GET" action="turnos.php">
+<select class="buscar_profesional" name="idProfesional"  id="idProfesional" >
+  <option value="0">Profesional</option>
+    ...
+	<?php foreach ($listadoProfesionales as $profesional): ?>
+
+					<option   value="<?php echo $profesional->getIdProfesional(); ?>">
+					    <?php echo $profesional; ?>
+					</option>
+
+				<?php endforeach ?>
+</select>
 
 
-                  </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($listadoAgenda as $agenda): ?>
-                  <tr>
+ <input type="submit" class="btn btn-info" value="Ver Turnos">
+ 
 
-                    <td><?php echo $agenda->getIdAgenda(); ?> </td>
-                    <td>
-                    
-                    <a href="detalle.php?idAgenda=<?php echo $agenda->getIdAgenda(); ?>&idProfesional=<?php echo $agenda->getIdProfesional();?>" title="ver detalle">
-                      <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                    </a>
-                    <a href="modificar.php?idAgenda=<?php echo $agenda->getIdAgenda(); ?>&idProfesional=<?php echo $agenda->getIdProfesional();?>" title= "actualizar">
-                      <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                    </a>
-                    <a href="procesar/eliminar.php?id=<?php echo $agenda->getIdAgenda(); ?>" title= "eliminar">
-                      <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                    </a>
-                    </td>
+</form>
+</section>
+</section>
 
-                  </tr>
-                 <?php endforeach;?>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <br>
-          <div>
-          <div>
-      <a href="alta.php"><h4><i class="fa fa-angle-right"></i>
-    Nueva Agenda</h4></a>
-  </div>
 
-      </section>
 
-      </section>
-
-   
-
+</section>
 </body>
 </html>
+
+<script>
+
+
+	
+
+
+$(document).ready(function() {
+    $('.buscar_profesional').select2();
+});
+
+
+</script>

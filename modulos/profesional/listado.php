@@ -82,12 +82,9 @@ $listadoProfesionales = Profesional::obtenerTodos();
         </div>
                   <div >
       <a href="alta.php"><h4><i class="fa fa-angle-right"></i>
-    Nuevo profesional</h4></a>
+    Agregar nuevo profesional</h4></a>
     
-    <a href="../especialidad/listado.php"><h4><i class="fa fa-angle-right"></i>
-     Especialidades</h4></a>
-  </div> 
-       	
+  
 
 
       </section>

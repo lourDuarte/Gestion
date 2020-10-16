@@ -31,6 +31,8 @@ CREATE TABLE `persona` (
   primary key (id_persona)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+
 INSERT INTO `persona` (`nombre`, `apellido`, `id_tipo_documento`, `numero_documento`, `fecha_nacimiento`, `id_estado`) VALUES
 ('Julia', 'Moendez', 0, '55885', '0000-00-00', 1),
 ('Ana', 'Torres', 3, '', '0000-00-00', 1),
@@ -88,7 +90,6 @@ CREATE TABLE `usuario` (
   primary key(id_usuario)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-drop table usuario;
 
 INSERT INTO `usuario` (`id_persona`, `username`, `password`, `fecha_ultimo_login`, `id_perfil`) VALUES
 (5, 'mgamarra', '123456', NULL, 1),
@@ -113,7 +114,7 @@ CREATE TABLE `domicilio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
-select*from domicilio
+select*from domicilio;
 INSERT INTO `domicilio` ( `calle`, `altura`, `piso`, `manzana`, `id_persona`) VALUES
 ('Junin', 850, NULL, '300', 7);
 --
@@ -237,6 +238,7 @@ CREATE TABLE `profesional_OS`(
  primary key(id_obra_social_profesional)
  );
  
+ 
  CREATE TABLE `paciente_OS`(
  `id_obra_social_paciente` int auto_increment not null,
  `id_obra_social` int (11) not null,
@@ -316,10 +318,13 @@ CREATE TABLE `agenda`(
 `fecha_desde` date NOT NULL,
 `fecha_hasta` date NOT NULL,
 `duracion` int(11) NOT NULL,
+`generado` int(11) null,
 primary key (id_agenda)
 );
+insert into agenda (id_profesional, hora_desde,hora_hasta,fecha_desde,fecha_hasta,generado) VALUES
+(1,'17:00:00','18:00:00','2020-10-01','2020-10.28',30,1);
 
-
+select*from agenda
 CREATE TABLE `agendaDia`(
 `id_agenda` int(11) not null,
 `lunes`  tinyint(1) default null,
@@ -329,4 +334,32 @@ CREATE TABLE `agendaDia`(
 `viernes` tinyint(1)  null
 );
 
+insert into agendaDia (id_agenda, lunes,martes,miercoles,jueves,viernes) VALUES
+(1,1,0,0,1,0);
 
+
+
+
+SELECT*FROM AGENDA
+SELECT * FROM agendaDia INNER JOIN agenda ON agendaDia.id_agenda = agenda.id_agenda
+WHERE agendaDia.id_agenda = '1';
+
+CREATE TABLE `turno`(
+`id_turno` int auto_increment NOT NULL,
+`id_profesional` int(11) not null,
+`fecha` date not null,
+`hora` time null,
+primary key(id_turno)
+);
+
+insert into turno (id_turno, id_profesional,fecha,hora) VALUES
+(1,'2020-10-15','17:00:00'),
+(1,'2020-10-15','17:30:00'),
+(1,'2020-10-19','17:00:00'),
+(1,'2020-10-19','17:30:00'),
+(1,'2020-10-22','17:00:00'),
+(1,'2020-10-22','17:30:00'),
+(1,'2020-10-26','17:30:00'),
+(1,'2020-10-26','17:30:00');
+
+select*from turno

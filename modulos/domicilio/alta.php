@@ -12,41 +12,69 @@ $moduloLlamada = $_GET['modulo'];
 <html>
 <head>
 	<title>Alta de Domicilio</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
-	<link rel="stylesheet" type="text/css" href="../../static/css/form.css">
+
+
 </head>
 <body>
 
 	<?php require_once "../../menu.php"; ?>
 	<br>
-	<br>
-		<h3>Domicilio</h3>
-		<br>
+<section id="main-content">
+    <section class="wrapper">
+    <div class="row mt">
+
+      <div class="col-lg-12">
+       <h4><i class="fa fa-angle-right"></i> Domicilio</h4>
+       <div class="form-panel">
+       <div class=" form">
 		<form name="frmDatos" method="POST" action="procesar/guardar.php">
 
 		    <input type="hidden" name="txtIdPersona" value='<?php echo $idPersona ?>'>
 		    <input type="hidden" name="txtIdLlamada" value='<?php echo $idLlamada ?>'>
 		    <input type="hidden" name="txtModulo" value='<?php echo $moduloLlamada ?>'>
 
-	        <label>Calle:</label>
-		    <input type="text" name="txtCalle">
-		    <br><br> 
+		    <div class="row mt">
+	        <label class="col-lg-2 control-label">Calle:</label>
+	        <div class="col-lg-10">
+		    <input type="text" name="txtCalle" class="form-control">
+		    </div>
+		</div>
+			<div class="row mt">
+		    	<label  class="col-lg-2 control-label">Altura:</label>
+		    <div class="col-lg-10">
+		    <input type="number" name="txtAltura" class="form-control">
+		    </div>
+		</div>
 
-		    <label>Altura:</label>
-		    <input type="number" name="txtAltura">
-		    <br><br>
-
-		    <label>Piso:</label>
-		    <input type="text" name="txtPiso">
-			<br><br> <!-- Salto de lineas -->
-
-		    <label>Manzana:</label>
-		    <input type="text" name="txtManzana">
-			<br><br> <!-- Salto de lineas -->
-
-		    <input type="submit" name="btnGuardar" value="Guardar">			
+			<div class="row mt">
+		    <label class="col-lg-2 control-label">Piso:</label>
+		    <div class="col-lg-10">
+		    <input type="text" name="txtPiso" class="form-control">
+			</div>
+			</div> 
+			<div class="row mt">
+		    <label class="col-lg-2 control-label">Manzana:</label>
+		    <div class="col-lg-10">
+		    <input type="text" name="txtManzana" class="form-control">
+			</div>
+		</div>
+		</div>
+			        <div align="left">
+                 
+                  <div class="row mt">
+                  <div class="col-lg-offset-2 col-lg-10">
+                   <input type="submit" name="btnGuardar" value="Guardar">
+                   </div>
+                   </div>
+              	</div>
 
 		</form>
+	</div>
+</div>
+</div>
+</div>
+</section>
+</section>
 
 </body>
 </html>

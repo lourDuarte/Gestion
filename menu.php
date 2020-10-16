@@ -71,7 +71,12 @@ $usuario = $_SESSION['usuario'];
             <span>Perfil</span>
             </a>
           </li>
-
+            <li lass="mt">
+            <a href="/programacion3/Gestion/modulos/agenda/listado.php">
+            <i class="fa fa-dashboard"></i>
+            <span>Agendas</span>
+            </a>
+          </li>
         </ul>
       </div>
     </aside>

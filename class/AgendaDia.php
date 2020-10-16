@@ -152,6 +152,8 @@ class AgendaDia{
 
     public function obtenerTodos(){
         $sql = " SELECT * FROM agendaDia";
+
+        echo $sql;
         $mysql= new MySQL();
 
         $mysql = new MySQL();
@@ -170,7 +172,7 @@ class AgendaDia{
             . " INNER JOIN agenda ON agendaDia.id_agenda = agenda.id_agenda"
             . " WHERE agenda.id_agenda = ".  $idAgenda;
 
-        echo $sql;
+        //echo $sql;
 
         $mysql= new MySQL();
         $datos = $mysql->consultar($sql);

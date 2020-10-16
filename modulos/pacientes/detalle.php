@@ -4,12 +4,16 @@ require_once '../../class/Paciente.php';
 
 require_once '../../class/ObraSocial.php';
 
+require_once '../../class/TipoDocumento.php';
+
 
 $id = $_GET['id'];
 
 $paciente= Paciente::obtenerPorId($id);
 
 $listaObraSocial=ObraSocial::obtenerOsPorIdPaciente($id);
+
+ 
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +60,7 @@ $listaObraSocial=ObraSocial::obtenerOsPorIdPaciente($id);
 					<td> <?php echo $paciente->getIdPersona(); ?> </td>
 					<td> <?php echo $paciente->getNombre(); ?></td>
 					<td> <?php echo $paciente->getApellido(); ?></td>
-					<td> <?php echo $paciente->getIdTipoDocumento();?></td>
+					<td> <?php echo $paciente->getIdTipoDocumento()?></td>
 					<td> <?php echo $paciente->getNumeroDocumento(); ?></td>
 					<td> <?php echo $paciente->getDescripcion(); ?></td>
 					<td> <?php echo $paciente->getFechaNacimiento(); ?></td>

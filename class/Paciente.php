@@ -116,11 +116,11 @@ class Paciente extends Persona {
 
    public static function obtenerPorId($id) {
         $sql = "SELECT persona.id_persona,paciente.id_paciente, persona.nombre, persona.apellido, "
-             . "persona.id_tipo_documento, persona.numero_documento, "
-             . "persona.fecha_nacimiento, persona.id_estado, "
-             . "paciente.descripcion FROM paciente "
-             . "INNER JOIN persona on persona.id_persona = paciente.id_persona "
-             . "WHERE paciente.id_paciente = " . $id; 
+             . " persona.id_tipo_documento, persona.numero_documento, "
+             . " persona.fecha_nacimiento, persona.id_estado, "
+             . " paciente.descripcion FROM paciente "
+             . " INNER JOIN persona on persona.id_persona = paciente.id_persona "
+             . " WHERE paciente.id_paciente = " . $id; 
 
         //echo $sql;
 
@@ -142,7 +142,7 @@ class Paciente extends Persona {
         $paciente->_descripcion = $data['descripcion'];
         $paciente->_idPersona = $data['id_persona'];
         $paciente->_fechaNacimiento = $data['fecha_nacimiento'];
-        $paciente->_tipoDocumento = $data['id_tipo_documento'];
+        $paciente->_idTipoDocumento = $data['id_tipo_documento'];
         $paciente->_numeroDocumento = $data['numero_documento'];
         $paciente->_estado = $data['id_estado'];
         $paciente->setDomicilio();
