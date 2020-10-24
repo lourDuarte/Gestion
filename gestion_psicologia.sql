@@ -321,10 +321,10 @@ CREATE TABLE `agenda`(
 `generado` int(11) null,
 primary key (id_agenda)
 );
-insert into agenda (id_profesional, hora_desde,hora_hasta,fecha_desde,fecha_hasta,generado) VALUES
-(1,'17:00:00','18:00:00','2020-10-01','2020-10.28',30,1);
+insert into agenda (id_profesional, hora_desde,hora_hasta,fecha_desde,fecha_hasta,duracion,generado) VALUES
+(1,'17:00','18:00','2020-10-01','2020-10.28',30,1);
 
-select*from agenda
+select*from agenda;
 CREATE TABLE `agendaDia`(
 `id_agenda` int(11) not null,
 `lunes`  tinyint(1) default null,
@@ -346,20 +346,22 @@ WHERE agendaDia.id_agenda = '1';
 
 CREATE TABLE `turno`(
 `id_turno` int auto_increment NOT NULL,
+`id_paciente` int(11) null default '0',
 `id_profesional` int(11) not null,
 `fecha` date not null,
 `hora` time null,
 primary key(id_turno)
 );
 
-insert into turno (id_turno, id_profesional,fecha,hora) VALUES
-(1,'2020-10-15','17:00:00'),
-(1,'2020-10-15','17:30:00'),
-(1,'2020-10-19','17:00:00'),
-(1,'2020-10-19','17:30:00'),
-(1,'2020-10-22','17:00:00'),
-(1,'2020-10-22','17:30:00'),
-(1,'2020-10-26','17:30:00'),
-(1,'2020-10-26','17:30:00');
+insert into turno (id_profesional,fecha,hora) VALUES
+(1,'2020-10-15','17:00'),
+(1,'2020-10-15','17:30'),
+(1,'2020-10-19','17:00'),
+(1,'2020-10-19','17:30'),
+(1,'2020-10-22','17:00'),
+(1,'2020-10-22','17:30'),
+(1,'2020-10-26','17:30'),
+(1,'2020-10-26','17:30');
 
 select*from turno
+

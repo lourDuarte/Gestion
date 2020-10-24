@@ -7,7 +7,7 @@ require_once 'AgendaDia.php';
 class Turno
 {
 	private $_idTurno;
-	//private $_idPaciente;
+	private $_idPaciente;
 	private $_idProfesional;
 	private $_fecha;
 	private $_hora;
@@ -156,13 +156,19 @@ class Turno
          return $result;
     }
     
+    public function obtenerPorIdTurno($id){
+        $mysql = new MySQL();
+        $sql = "SELECT * FROM turno WHERE id_turno = ". $id.";";
+         $result = $mysql->consultar($sql);
+         return $result;
+    }
 
     public function guardar(){
 
-        $sql = " INSERT INTO turno (id_turno, id_profesional, fecha,hora) "
-             . " VALUES (NULL,  $this->_idProfesional, '$this->_fecha', '$this->_hora') ";
+        $sql = " INSERT INTO turno (id_turno,id_paciente,id_profesional, fecha,hora) "
+             . " VALUES (NULL,NULL, $this->_idProfesional, '$this->_fecha', '$this->_hora') ";
 
-        //echo $sql;
+        echo $sql;
 
         $mysql = new MySQL();
         $idInsertado = $mysql->insertar($sql);
@@ -243,7 +249,7 @@ class Turno
                                 $turnos+=1;
                                 if ($horas < $totalTurnos)
                                 {
-                                    if ($fecha >= date("Y-m-d")){
+                                    if ($fecha >= date("Y-m-d") ){
                                     $turno = new Turno();
                                     $turno->setIdProfesional($agenda->getIdProfesional());
                                     $turno->setHora($horario);
@@ -391,3 +397,4 @@ class Turno
 
 
 ?>
+

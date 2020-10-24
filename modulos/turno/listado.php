@@ -8,6 +8,7 @@ $listadoProfesionales=Profesional::obtenerTodos();
 
 
 
+
 ?>
 
 
@@ -17,6 +18,7 @@ $listadoProfesionales=Profesional::obtenerTodos();
 <html>
 <head>
 	<title></title>
+ 
 
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="/programacion3/Gestion/static/lib/select/select2.min.js"></script>
@@ -31,6 +33,7 @@ $listadoProfesionales=Profesional::obtenerTodos();
 <br><br>
 
 <form class="cmxform form-horizontal style-form" id="commentForm" name="frmDatos" method="GET" action="turnos.php">
+<div align="center">
 <select class="buscar_profesional" name="idProfesional"  id="idProfesional" >
   <option value="0">Profesional</option>
     ...
@@ -45,7 +48,7 @@ $listadoProfesionales=Profesional::obtenerTodos();
 
 
  <input type="submit" class="btn btn-info" value="Ver Turnos">
- 
+ </div>
 
 </form>
 </section>
