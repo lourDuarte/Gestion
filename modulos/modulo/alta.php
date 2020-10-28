@@ -6,6 +6,23 @@ require_once '../../menu.php';
 
 <section id="main-content">
     <section class="wrapper">
+      <div align="center">
+
+            <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+                <font color="red">
+                    <h3><?php echo $_SESSION['mensaje_error'] ?></h3>
+                </font>
+
+                <br><br>
+
+            <?php
+                    unset($_SESSION['mensaje_error']);
+                endif;
+            ?>
+
+         <div id="mensajeError"></div>
+        </div>
     <div class="row mt">
 
       <div class="col-lg-12">

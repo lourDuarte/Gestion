@@ -18,7 +18,7 @@ $listaObraSocial =  ObraSocial::obtenerTodos();
 <head>
 	<title>Nuevo Paciente</title>
 
-	<script type="text/javascript" src="../../satic/js/validacion.js"></script>
+	<script type="text/javascript" src="../../satic/js/validacionPaciente.js"></script>
 </head>
 <body>
 	<?php
@@ -69,7 +69,7 @@ $listaObraSocial =  ObraSocial::obtenerTodos();
 			<div class="row mt">
             <label class="col-lg-2 control-label">Fecha Nacimiento</label>
              <div class="col-lg-10">
-				<input type="date" name="txtFechaNacimiento" class="form-control">
+				<input type="date" name="txtFechaNacimiento" class="form-control" id="txtFechaNacimiento">
 			</div>
 			</div> 
 
@@ -116,7 +116,7 @@ $listaObraSocial =  ObraSocial::obtenerTodos();
 			 <div align="left">    
              <div class="row mt">
                   <div class="col-lg-offset-2 col-lg-10">
-                   <input type="submit" name="btnGuardar"value="Guardar" onclick="validar();">
+                   <input type="submit" name="btnGuardar"value="Guardar" onclick="validarPaciente();">
                    </div>
                    </div>
               	</div>

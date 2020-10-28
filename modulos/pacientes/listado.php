@@ -43,9 +43,15 @@ $listaPacientes = Paciente::obtenerTodos();
 				<h3>Paciente Actualizado con exito</h3> 
 		<?php } ?>
         <h3><i class="fa fa-angle-right"></i> Listado Pacientes</h3>
+        <div align="left">
+        	 <a href="informe/informePago.php">
+				<button type="button" class="btn btn-primary btn-sm">Informe de pagos</button>
+			 </a>
+        </div>
         <div class="row mt">
           <div class="col-md-12">
             <div class="content-panel">
+
               <table class="table table-striped table-advance table-hover">
                 <hr>
                 <thead>

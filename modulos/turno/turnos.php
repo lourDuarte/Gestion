@@ -15,100 +15,38 @@ require_once ('../../class/turno.php');
     <title></title>
     <script src='../../static/fullCalendar/js/main.js'></script>
     <script src='../../static/fullCalendar/js/es.js'></script>
-
+​
 <link href='../../static/fullCalendar/main.css' rel='stylesheet' />
-</head>
-<body>
-<br><br>
-<section id="main-content">
-  <section class="wrapper">
-
-    
-         <script>
-  var id_profesional = <?php echo $_GET['idProfesional']; ?>;
-  //alert(id_profesional);
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      eventClick: function(info,date) {
-        var eventObj = info.event;
-
-        //alert(eventObj.start);
-
-        $('#id_turno').val(eventObj.title);
-
-    
-        $('#modalCalendar').modal('show');
-        //alert('Click evento ' );
-      },
-
-      locale:'es',
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-      },
-      initialDate: '2020-10-13',
-      navLinks: true, // can click day/week names to navigate views
-      businessHours: true, // display business hours
-      editable: true,
-      selectable: true,
-      // your event source
-      eventSources: 
-      [
-        {
-          url: '/programacion3/Gestion/modulos/turno/procesar/turnos_calendario.php',
-          method: 'GET',
-          extraParams: {
-            idProfesional: id_profesional
-          },
-          failure: function() {
-            alert('there was an error while fetching events!');
-          },
-           
-          color: 'black',   // a non-ajax option
-           // a non-ajax option
-          
-
-        }
-
-
-    ]
-    
-
-    
-
-    });
-
-    calendar.render();
-    
-    
-  });
-</script>
 <style>
-
+​
   body {
     margin: 40px 10px;
     padding: 0;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-size: 14px;
   }
-
+​
   #calendar {
     max-width: 1100px;
     margin: 0 auto;
   }
-
+​
 </style>
 </head>
 
-  <div id='calendar'></div>
 
+<body>
+<br><br>
+
+<section id="main-content">
+  <section class="wrapper">
+​
+<div id='calendar'></div>
+​
+​
     
 </section>
 </section>
-
 
 <!-- Modal Turnos -->
 <div class="modal fade" id="modalCalendar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -128,14 +66,14 @@ require_once ('../../class/turno.php');
         <option value="0">Ver Pacientes</option>
     ...
   <?php foreach ($listadoPaciente as $paciente): ?>
-
+​
           <option   value="<?php echo $paciente->getIdPaciente(); ?>">
               <?php echo $paciente; ?>
           </option>
-
+​
         <?php endforeach ?>
       </select>
-
+​
         
       </div>
       <div class="modal-footer">
@@ -145,8 +83,68 @@ require_once ('../../class/turno.php');
     </div>
   </div>
 </div>
-<script>
 
+
+<!--Fin Modal Turnos -->
+​
+​
+
+
+<script>
+  var id_profesional = <?php echo $_GET['idProfesional']; ?>;
+  var events =  {
+          url: '/programacion3/Gestion/modulos/turno/procesar/turnos_calendario.php',
+          method: 'GET',
+          extraParams: {
+            idProfesional: id_profesional
+          },
+          failure: function() {
+            alert('Este profesional no tiene turnos');
+          }
+        }
+
+  //alert(id_profesional);
+  var calendarEl = document.getElementById('calendar');
+​
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      eventClick: function(info,date) {
+        var eventObj = info.event;
+​
+        $('#id_turno').val(eventObj.title);
+​
+    
+        $('#modalCalendar').modal('show');
+        
+      },
+​
+      locale:'es',
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+      },
+      initialDate: '2020-10-13',
+      navLinks: true, // can click day/week names to navigate views
+      businessHours: true, // display business hours
+      editable: true,
+      selectable: true,
+      // your event source
+      eventSources: 
+      [events]
+    
+​
+    
+​
+    });
+  document.addEventListener('DOMContentLoaded', function() {
+    
+​
+    calendar.render();
+​
+
+    
+  });
+​
   function asignarPaciente(){
      //var idTurno = $('#id_turno').val();
      //alert(idTurno);
@@ -154,7 +152,7 @@ require_once ('../../class/turno.php');
         type: 'GET',
         url : "/programacion3/Gestion/modulos/turno/procesar/guardar_paciente.php",
         data: { 
-
+​
            'turno': $('#id_turno').val(),
            'paciente': $('#id_paciente').val()
         },
@@ -162,15 +160,12 @@ require_once ('../../class/turno.php');
           
           calendar.refetchEvents();
         }
-
-
-      
+​
       })
       
       $('#modalCalendar').modal('toggle');
     
   }
-  
 </script>
 </body>
 </html>

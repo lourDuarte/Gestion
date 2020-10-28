@@ -2,11 +2,11 @@
 require_once('../../../class/Turno.php');
 require_once('../../../class/MySQL.php');
 
-$id = $_GET['idProfesional'];
+//$id = $_GET['idProfesional'];
 
 
 $turno = new Turno();
-$result = $turno->obtenerPorIdProfesional($id);
+$result = $turno->obtenerPorIdProfesional($_GET['idProfesional']);
 
 
 $listadoTurnos = []; 

@@ -219,9 +219,7 @@ CREATE TABLE `profesional_especialidad`(
 
 -- Estructura de tabla para la tabla `obraSocial`
 --
-        /*$sql = "SELECT id_especialidad, tipo "
-             . " FROM especialidad WHERE id_especialidad = " . $id;*/
-
+ 
 CREATE TABLE `obraSocial` (
   `id_obra_social` int auto_increment NOT NULL,
   `nombre` varchar(30) NOT NULL,
@@ -230,15 +228,26 @@ CREATE TABLE `obraSocial` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-
 CREATE TABLE `profesional_OS`(
  `id_obra_social_profesional` int auto_increment not null,
  `id_obra_social` int (11) not null,
  `id_profesional` int(11) not null,
  primary key(id_obra_social_profesional)
  );
+
+
+ CREATE TABLE `autorizacion`(
+ `id_paciente` int(11)  null,
+ `cantidad_autorizada` int (11)  null,
+ `fecha` date null
+ );
  
- 
+drop table tratamiento;
+ insert into autorizacion (id_paciente,cantidad_autorizada,fecha) VALUES
+ (1,4,'20-10-05'),
+ (2,3,'20-10-10'),
+ (3,8,'20-10-15');
+
  CREATE TABLE `paciente_OS`(
  `id_obra_social_paciente` int auto_increment not null,
  `id_obra_social` int (11) not null,
@@ -350,18 +359,27 @@ CREATE TABLE `turno`(
 `id_profesional` int(11) not null,
 `fecha` date not null,
 `hora` time null,
+`id_estado` int(11) null,
 primary key(id_turno)
 );
 
-insert into turno (id_profesional,fecha,hora) VALUES
-(1,'2020-10-15','17:00'),
-(1,'2020-10-15','17:30'),
-(1,'2020-10-19','17:00'),
-(1,'2020-10-19','17:30'),
-(1,'2020-10-22','17:00'),
-(1,'2020-10-22','17:30'),
-(1,'2020-10-26','17:30'),
-(1,'2020-10-26','17:30');
+CREATE TABLE `estadoTurno`(
+`id_estado` int auto_increment NOT NULL,
+`descripcion` varchar(25) not null,
+primary key(id_estado)
+);
+insert into estadoTurno (descripcion) VALUES
+('cancelado'),
+('atendido');
 
-select*from turno
+insert into turno (id_profesional,fecha,hora,id_estado) VALUES
+(1,'2020-10-15','17:00',1),
+(1,'2020-10-15','17:30',1),
+(1,'2020-10-19','17:00',2),
+(1,'2020-10-19','17:30',2),
+(1,'2020-10-22','17:00',2),
+(1,'2020-10-22','17:30',1),
+(1,'2020-10-26','17:30',2),
+(1,'2020-10-26','17:30',2);
 
+select*from estadoTurno

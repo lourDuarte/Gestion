@@ -14,11 +14,29 @@ $diaSemana = AgendaDia::obtenerTodos()
 <html>
 <head>
 	<title>Nueva Agenda</title>
+	<script type="text/javascript" src="../../satic/js/validacionAgenda.js"></script>
 </head>
 <body>
 
 	<section id="main-content">
     	<section class="wrapper">
+    		<div align="center">
+
+            <?php if (isset($_SESSION['mensaje_error'])) : ?>
+
+                <font color="red">
+                    <h3><?php echo $_SESSION['mensaje_error'] ?></h3>
+                </font>
+
+                <br><br>
+
+            <?php
+                    unset($_SESSION['mensaje_error']);
+                endif;
+            ?>
+
+         <div id="mensajeError"></div>
+        </div>
     <div class="row mt">
 
       <div class="col-lg-12">
@@ -51,20 +69,20 @@ $diaSemana = AgendaDia::obtenerTodos()
 		<div class="row mt">
             <label class="col-lg-2 control-label">Fecha inicio de atencion</label>
              <div class="col-lg-10">
-				<input type="date" name="txtFechaInicio" class="form-control">
+				<input type="date" name="txtFechaInicio" class="form-control" id="txtFechaInicio">
 			</div>
 			</div> 
 			<div class="row mt">
             <label class="col-lg-2 control-label">Fecha final de atencion</label>
              <div class="col-lg-10">
-				<input type="date" name="txtFechaFinal" class="form-control">
+				<input type="date" name="txtFechaFinal" class="form-control" id="txtFechaFinal">
 			</div>
 			</div> 
 
 		<div class="row mt">
             <label class="col-lg-2 control-label">Duracion por turno</label>
             <div class="col-lg-10">
-				<input type="text" name="txtDuracion" class="form-control">
+				<input type="text" name="txtDuracion" class="form-control" id="txtDuracion">
 			</div>
 		</div>
 
@@ -97,7 +115,7 @@ $diaSemana = AgendaDia::obtenerTodos()
 
             <div class="row mt" align="left">
                   <div class="col-lg-offset-2 col-lg-10">
-                   <input type="submit" name="btnGuardar"value="Guardar" >
+                   <input type="submit" name="btnGuardar"value="Guardar" onclick="validarAgenda();" >
                    </div>
                    </div>
               	</div>

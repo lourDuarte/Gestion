@@ -23,7 +23,7 @@ if (empty(trim($nombre))) {
 if (empty(trim($apellido))) {
 	$_SESSION['mensaje_error']= "ERROR APELLIDO VACIO";
 	header('location:../alta.php');
-;
+
 	exit;
 }
 

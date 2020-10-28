@@ -15,6 +15,8 @@ $tipoPerfil= Perfil::obtenerTodos();
 <head>
 	<title>Nuevo Usuario</title>
 
+	<script type="text/javascript" src="../../satic/js/validacionUsuario.js"></script>
+
 </head>
 <body>
 
@@ -49,25 +51,25 @@ $tipoPerfil= Perfil::obtenerTodos();
 		<div class="row mt">
             <label class="col-lg-2 control-label">Nombre</label>
             <div class="col-lg-10">
-				<input type="text" name="txtNombre" class="form-control">
+				<input type="text" name="txtNombre" class="form-control" id="txtNombre">
 			</div>
 		</div>
 		<div class="row mt">
             <label class="col-lg-2 control-label">Apellido</label>
             <div class="col-lg-10">
-				<input type="text" name="txtApellido" class="form-control">
+				<input type="text" name="txtApellido" class="form-control" id="txtApellido">
 			</div>
 		</div>
 		<div class="row mt">
             <label class="col-lg-2 control-label">Username</label>
             <div class="col-lg-10">
-				<input type="text" name="txtUsername" class="form-control">
+				<input type="text" name="txtUsername" class="form-control" id="txtUsername">
 			</div>
 		</div>
 		<div class="row mt">
             <label class="col-lg-2 control-label">Password</label>
             <div class="col-lg-10">
-				<input type="text" name="txtPassword" class="form-control">
+				<input type="text" name="txtPassword" class="form-control" id="txtPassword">
 			</div>
 		</div>
 		<div class="row mt">
@@ -93,7 +95,7 @@ $tipoPerfil= Perfil::obtenerTodos();
 		<div class="row mt">
             <label class="col-lg-2 control-label">Numero Documento</label>
             <div class="col-lg-10">
-				<input type="text" name="txtNumeroDocumento" class="form-control">
+				<input type="text" name="txtNumeroDocumento" class="form-control" id="txtNumeroDocumento">
 			</div>
 		</div>
 		<div class="row mt">
@@ -113,7 +115,7 @@ $tipoPerfil= Perfil::obtenerTodos();
                  
              <div class="row mt">
                   <div class="col-lg-offset-2 col-lg-10">
-                   <input type="submit" name="btnGuardar" value="Guardar">
+                   <input type="submit" name="btnGuardar" value="Guardar" onclick="validarUsuario();">
                    </div>
                    </div>
               	</div>

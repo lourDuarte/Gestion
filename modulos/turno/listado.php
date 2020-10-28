@@ -48,6 +48,10 @@ $listadoProfesionales=Profesional::obtenerTodos();
 
 
  <input type="submit" class="btn btn-info" value="Ver Turnos">
+ <br><br>
+ <a href="informe/informeTurno.php">
+<button type="button" class="btn btn-primary btn-sm">Informe de turnos</button>
+ </a>
  </div>
 
 </form>

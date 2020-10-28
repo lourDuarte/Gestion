@@ -23,7 +23,7 @@ $listaObraSocial = ObraSocial::obtenerTodos();
 <head>
 	<title>Nuevo Profesional</title>
 
-	<script type="text/javascript" src="../../satic/js/validacion.js"></script>
+	<script type="text/javascript" src="../../satic/js/validacionProfesional.js"></script>
     <script type="text/javascript">
 
         function soloNumeros(e){
@@ -152,7 +152,7 @@ $listaObraSocial = ObraSocial::obtenerTodos();
 		 <div align="left">    
              <div class="row mt">
                   <div class="col-lg-offset-2 col-lg-10">
-                   <input type="submit" name="btnGuardar"value="Guardar" onclick="validar();">
+                   <input type="submit" name="btnGuardar"value="Guardar" onclick="validarProfesional();">
                    </div>
                    </div>
               	</div>

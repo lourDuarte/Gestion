@@ -165,8 +165,8 @@ class Turno
 
     public function guardar(){
 
-        $sql = " INSERT INTO turno (id_turno,id_paciente,id_profesional, fecha,hora) "
-             . " VALUES (NULL,NULL, $this->_idProfesional, '$this->_fecha', '$this->_hora') ";
+        $sql = " INSERT INTO turno (id_turno,id_paciente,id_profesional, fecha,hora,id_estado) "
+             . " VALUES (NULL,NULL, $this->_idProfesional, '$this->_fecha', '$this->_hora',NULL) ";
 
         echo $sql;
 
