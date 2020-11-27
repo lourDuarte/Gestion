@@ -11,26 +11,7 @@ class AgendaDia{
 	private $_jueves;
 	private $_viernes;
 
-
-	public function guardar(){
-		$sql = " INSERT INTO AgendaDia (id_agenda, lunes,martes,miercoles,jueves,viernes) "
-			 . " VALUES ($this->_idAgenda, $this->_lunes, $this->_martes, $this->_miercoles, "
-			 . " $this->_jueves, $this->_viernes) ";
-
-		//echo $sql;
-
-		$mysql= new MySQL();
-
-		$mysql->insertar($sql);
-
-		$mysql->desconectar();
-	}
-	
-	public function obtenerTodosLosDias(){
-		$sql= "SELECT*FROM AgendaDia";
-	}
-
-    /**
+/**
      * @return mixed
      */
     public function getIdAgenda()
@@ -149,6 +130,24 @@ class AgendaDia{
 
         return $this;
     }
+
+	public function guardar(){
+
+		$sql = " INSERT INTO AgendaDia (id_agenda, lunes,martes,miercoles,jueves,viernes) "
+			 . " VALUES ($this->_idAgenda, $this->_lunes, $this->_martes, $this->_miercoles, "
+			 . " $this->_jueves, $this->_viernes) ";
+
+		//echo $sql;
+
+		$mysql= new MySQL();
+
+		$mysql->insertar($sql);
+
+		$mysql->desconectar();
+	}
+	
+
+    
 
     public function obtenerTodos(){
         $sql = " SELECT * FROM agendaDia";

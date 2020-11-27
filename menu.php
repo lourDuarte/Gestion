@@ -46,43 +46,14 @@ $usuario = $_SESSION['usuario'];
               <span><?php echo $modulo;?></span>
               </a>
         <?php endforeach; ?>
-          </li>
-          <li lass="mt">
-            <a href="/programacion3/Gestion/modulos/usuarios/listado.php">
-            <i class="fa fa-dashboard"></i>
-            <span>Usuarios</span>
-            </a>
-          </li>
-          <li lass="mt">
-            <a href="/programacion3/Gestion/modulos/tratamiento/listado.php">
-            <i class="fa fa-dashboard"></i>
-            <span>Tratamiento</span>
-            </a>
-          </li>
-          <li lass="mt">
-            <a href="/programacion3/Gestion/modulos/modulo/listado.php">
-            <i class="fa fa-dashboard"></i>
-            <span>Modulos</span>
-            </a>
-          </li>
-          <li lass="mt">
-            <a href="/programacion3/Gestion/modulos/perfil/listado.php">
-            <i class="fa fa-dashboard"></i>
-            <span>Perfil</span>
-            </a>
-          </li>
-            <li lass="mt">
-            <a href="/programacion3/Gestion/modulos/agenda/listado.php">
-            <i class="fa fa-dashboard"></i>
-            <span>Agendas</span>
-            </a>
-          </li>
+          
         </ul>
       </div>
     </aside>
-
 </body>
-</html>
+
+
+
 
 
 

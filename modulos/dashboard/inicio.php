@@ -1,7 +1,6 @@
-
 <?php
-require_once "class/Usuario.php";
-require_once "menu.php"; 
+require_once "../../class/Usuario.php";
+require_once "../../menu.php"; 
 
 
 session_start();

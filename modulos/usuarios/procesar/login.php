@@ -12,9 +12,14 @@ $usuario = Usuario::login($username, $password);
 if ($usuario->estaLogueado()) {
 	session_start();
 	$_SESSION['usuario'] = $usuario;
-	header("location: ../../../dashboard.php");
+	if($usuario->perfil->getIdPerfil() == 1){
+		header("location: ../../dashboard/listado.php");
+	} elseif ($usuario->perfil->getIdPerfil() != 1){
+		header("location: ../../dashboard/inicio.php");
+	}
 } else {
 	header("location: ../../../formulario_login.php");
 }
+
 
 ?>

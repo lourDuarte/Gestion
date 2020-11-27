@@ -151,8 +151,6 @@ class ObraSocial{
     }
 
   
-
-
     private function _generarListadoObraSocial($datos) {
         $listado = array();
         while ($registro = $datos->fetch_assoc()) {

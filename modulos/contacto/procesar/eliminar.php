@@ -4,14 +4,19 @@
 require_once '../../../class/Contacto.php';
 
 
-$idPersona= $_GET['idPersonaContacto'];
+$id = $_GET['idPersonaContacto'];
+$modulo = $_GET['modulo'];
+$idLlamada = $_GET['idLlamada'];
 
 
-$contacto= Contacto::obtenerPorIdPersona($idPersona);
+
+$contacto = Contacto::obtenerPorId($id);
 
 $contacto->eliminar();
 
-header('location:/programacion3/Gestion/modulos/$modulo/detalle.php');
+//highlight_string(var_export($contacto,true));
+
+header("location: /programacion3/gestion/modulos/$modulo/detalle.php?id=$idLlamada");
 
 
 

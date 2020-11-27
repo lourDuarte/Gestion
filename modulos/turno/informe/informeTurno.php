@@ -3,16 +3,16 @@
 require_once '../../../class/MySQL.php';
 require_once '../../../menu.php';
 require_once '../../../class/Profesional.php';
+require_once '../../../class/EstadoTurno.php';
+
 
 $listaProfesional = Profesional::obtenerTodos();
+$estadoTurnos = EstadoTurno::obtenerTodos();
 
-if (isset($_POST['txtFechaDesde'])) {
-    $fechaDesde = $_POST['txtFechaDesde'];
+if (isset($_POST['txtMes'])) {
+    $fechaMes = $_POST['txtMes'];
 }
 
-if (isset($_POST['txtFechaHasta'])) {
-    $fechaHasta = $_POST['txtFechaHasta'];
-}
 
 if (isset($_POST['txtEstado'])) {
     $estado = $_POST['txtEstado'];
@@ -24,56 +24,111 @@ if (isset($_POST['txtProfesional'])) {
 
 $datos = NULL;
 
-if (isset($fechaDesde) && isset($fechaHasta)&& isset($estado) && isset($profesional)) {
-    if (!empty($fechaDesde) && !empty($fechaHasta) && !empty($estado) && !empty($profesional)) {
+if (!empty($fechaMes) && !empty($estado) && !empty($profesional)) {
+
+        $sql = "SELECT turno.fecha, turno.hora, estadoTurno.descripcion, persona.nombre,persona.apellido "
+                . " FROM turno "
+                . " INNER JOIN estadoTurno ON turno.id_estado = estadoTurno.id_estado "
+                . " INNER JOIN profesional ON profesional.id_profesional = turno.id_profesional "
+                . " INNER JOIN persona ON persona.id_persona = profesional.id_persona "
+                . " WHERE MONTH(turno.fecha) = '$fechaMes' "
+                . " AND estadoTurno.id_estado = '$estado' "
+                . " AND profesional.id_profesional = '$profesional';";
+
+            $mysql = new MySQL();
+            $datos = $mysql->consultar($sql);
+    
+}elseif (!empty($fechaMes) && !empty($estado) && empty($profesional)){
+    
         $sql = "SELECT turno.fecha, turno.hora, estadoTurno.descripcion, persona.nombre,persona.apellido "
             . " FROM turno "
             . " INNER JOIN estadoTurno ON turno.id_estado = estadoTurno.id_estado "
             . " INNER JOIN profesional ON profesional.id_profesional = turno.id_profesional "
             . " INNER JOIN persona ON persona.id_persona = profesional.id_persona "
-            . " WHERE turno.fecha BETWEEN '$fechaDesde' AND '$fechaHasta' "
-            . " AND estadoTurno.id_estado = '$estado' "
-            . " AND profesional.id_profesional = '$profesional';";
+            . " WHERE MONTH(turno.fecha) = '$fechaMes' "
+            . " AND estadoTurno.id_estado = '$estado';";
+
 
         $mysql = new MySQL();
         $datos = $mysql->consultar($sql);
-    }
+    
+    
 }
 
-//echo $datos->num_rows;
-//echo "<br><br>";
 
-//highlight_string(var_export($datos, true));
-//exit;
 
 ?>
 
 <html>
-    <head></head>
-    <body>
+    <head>
+        
+        <script >
+            
+            function mensaje(){
+                var fechaDesde = document.getElementById("txtFechaDesde").value;
+                var fechaHasta =document.getElementById("txtFechaHasta").value;
+                var estado = document.getElementById("txtEstado").value;
+
+                if(fechaDesde.trim() == "" || fechaHasta.trim() == "" ){
+                    alert("Las fechas y estado son campos obligatorios para el informe")
+            
+                }
+                if(estado.value == 0)
+                  {
+                   alert("Selecciona Una opción")
+                     
+                  }
+                
+            }
+
+
+        </script>
+
+    </head>
+<body>
 <section id="main-content">
     <section class="wrapper">
+
     <div class="row mt">
 
       <div class="col-lg-12">
-       <h4><i class="fa fa-angle-right"></i> Turnos del mes</h4>
+       <h4><i class="fa fa-angle-right"></i> Estado de turnos entre fechas </h4>
        <div class="form-panel">
        <div class=" form">
         <div align='center'>
             <form method='POST'>
-                Desde: <input type='date' name='txtFechaDesde'>
-                &nbsp;&nbsp;
-                Hasta: <input type='date' name='txtFechaHasta'>
-                <br><br>
-                Estado: 
-                <select name="txtEstado">
+                Mes:
+                <select name="txtMes">
                     <option value="0">Seleccionar</option>
-                    <option value="1">Cancelado</option>
-                    <option value="2">Atendido</option>
+                    <option value="01">Enero</option>
+                    <option value="02">Febrero</option>
+                    <option value="03">Marzo</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Mayo</option>
+                    <option value="06">Junio</option>
+                    <option value="07">Julio</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+
                 </select>
-                Profesional:
+               
+                &nbsp;&nbsp;
+                Estado: 
+                <select name="txtEstado" id="txtEstado">
+                    <option value="0">Seleccionar</option>
+                 <?php foreach ($estadoTurnos as $estado): ?>
+                    <option value="<?php echo $estado->getIdEstado();?>">
+                        <?php echo $estado?>      
+                    </option>
+                <?php endforeach?>
+                </select>
+                <br><br>
+                Profesional (opcional):
                 <select  name="txtProfesional"  >
-              <option value="0">Profesional</option>
+              <option value="0">Elegir profesional</option>
                 ...
                 <?php foreach ($listaProfesional as $profesional): ?>
 
@@ -84,7 +139,7 @@ if (isset($fechaDesde) && isset($fechaHasta)&& isset($estado) && isset($profesio
                 <?php endforeach ?>
             </select>
                 <br><br>
-                <input type='submit' value='Consultar'>
+                <input type='submit' value='Consultar' onclick="mensaje();">
             </form>
             <br><br>
             <?php if (!is_null($datos)): ?>
@@ -117,5 +172,5 @@ if (isset($fechaDesde) && isset($fechaHasta)&& isset($estado) && isset($profesio
 </section>
 
 
-    </body>
+</body>
 </html>

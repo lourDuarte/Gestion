@@ -27,37 +27,37 @@ $listadoModulos = Modulo::obtenerModulosPorIdPerfil($id);
             <div class="content-panel">
               <h4><i class="fa fa-angle-right"></i> <?php echo $perfil;?></h4>
               <hr>
-              <table class="table">
-                <thead>
-                  <tr>
-					<th>ID Perfil</th>
-					<th>Descripcion</th>
-					<th>Modulos</th>
-				   </tr>
-				</thead>
-				<tbody>
-				<tr>
-					<td><?=$perfil->getIdPerfil();?></td>
-					<td><?=$perfil->getDescripcion();?></td>
-					<td>
-					<?php foreach ($listadoModulos as $modulo): ?>
-							<?php 
+              	<table class="table">
+	                <thead>
+	                  <tr>
+						<th>ID Perfil</th>
+						<th>Descripcion</th>
+						<th>Modulos</th>
+					   </tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?=$perfil->getIdPerfil();?></td>
+							<td><?=$perfil->getDescripcion();?></td>
+							<td>
+							<?php foreach ($listadoModulos as $modulo): ?>
+									<?php 
 
-								$idModulo = $modulo->getIdModulo();
+										$idModulo = $modulo->getIdModulo();
 
-									if ($perfil->tieneModulo($idModulo)) {
-										echo "$modulo -";
-									} 
+											if ($perfil->tieneModulo($idModulo)) {
+												echo "$modulo -";
+											} 
 
-							?>
-					<?php endforeach ?>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+									?>
+							<?php endforeach ?>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
-</div>
-</div>
 </section>
 </section>
 

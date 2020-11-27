@@ -11,9 +11,6 @@ $listadoProfesionales=Profesional::obtenerTodos();
 
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,51 +25,47 @@ $listadoProfesionales=Profesional::obtenerTodos();
 
 
 <body>
-<section id="main-content">
-	<section class="wrapper">
-<br><br>
+	<section id="main-content">
+		<section class="wrapper">
+			<br><br>
+	 		<a href="informe/informeTurno.php">
+				<button type="button" class="btn btn-primary btn-sm">Informe de turnos</button>
+	 		</a>
+	 		<br><br>
+			<form class="cmxform form-horizontal style-form" id="commentForm" name="frmDatos" method="GET" action="turnos.php">
+				<div align="center">
+					<select class="buscar_profesional" name="idProfesional"  id="idProfesional" >
+		  				<option value="0">Profesional</option>
+						<?php foreach ($listadoProfesionales as $profesional): ?>
 
-<form class="cmxform form-horizontal style-form" id="commentForm" name="frmDatos" method="GET" action="turnos.php">
-<div align="center">
-<select class="buscar_profesional" name="idProfesional"  id="idProfesional" >
-  <option value="0">Profesional</option>
-    ...
-	<?php foreach ($listadoProfesionales as $profesional): ?>
+							<option   value="<?php echo $profesional->getIdProfesional(); ?>">
+							    <?php echo $profesional; ?>
+							</option>
+						<?php endforeach ?>
+					</select>
+		 			<input type="submit" class="btn btn-info" value="Ver Turnos">
+					<br><br><br><br>
+					<img src="/programacion3/gestion/static/img/calendario2.png">
 
-					<option   value="<?php echo $profesional->getIdProfesional(); ?>">
-					    <?php echo $profesional; ?>
-					</option>
+	 			</div>
 
-				<?php endforeach ?>
-</select>
+			</form>
 
+		</section>
+	</section>
 
- <input type="submit" class="btn btn-info" value="Ver Turnos">
- <br><br>
- <a href="informe/informeTurno.php">
-<button type="button" class="btn btn-primary btn-sm">Informe de turnos</button>
- </a>
- </div>
-
-</form>
-</section>
-</section>
+	<script>
 
 
+		
 
-</section>
+
+	$(document).ready(function() {
+	    $('.buscar_profesional').select2();
+	});
+
+
+	</script>
 </body>
 </html>
 
-<script>
-
-
-	
-
-
-$(document).ready(function() {
-    $('.buscar_profesional').select2();
-});
-
-
-</script>

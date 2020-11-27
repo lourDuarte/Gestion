@@ -1,10 +1,13 @@
 <?php
 
 require_once '../../class/Usuario.php';
+require_once '../../class/TipoDocumento.php';
+require_once '../../menu.php';
 
 $id= $_GET['id'];
 
 $usuario= Usuario::ObtenerPorId($id);
+$listadoDocumento = TipoDocumento::obtenerTodos();
 
 ?>
 
@@ -13,50 +16,114 @@ $usuario= Usuario::ObtenerPorId($id);
 <html>
 <head>
 	<title>Actualizar Usuario</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/form.css">
 </head>
 <body>
+<section id="main-content">
+    <section class="wrapper">
 
-		<caption> Actualizar Usuario</caption>
+		<div class="row mt">
+			 	<div align="center">
 
-		<br><br>
-		<form name="frmDatos" method="POST" action = "procesar/modificar.php">
+			        <?php if (isset($_SESSION['mensaje_error'])) : ?>
 
-			<input type="hidden" name="txtId" value="<?php echo $usuario->getIdUsuario(); ?>">
+			          <font color="red">
+			            <h3><?php echo $_SESSION['mensaje_error'] ?></h3>
+			          </font>
+			         <?php
+			           unset($_SESSION['mensaje_error']);
+			            endif;
+			          ?>
+        	 		<div id="mensajeError"></div>
+      			</div>
 
-			<label>Nombre</label>
-			<input type="text" name="txtNombre" value="<?php echo $usuario->getNombre();?>">
-		<br><br>
+      			<div class="col-lg-12">
+       				<h4><i class="fa fa-angle-right"></i> Actualizar Usuario</h4>
+       				<div class="form-panel">
+       					<div class=" form">
+       	
+							<form class="cmxform form-horizontal style-form" id="commentForm" name="frmDatos" method="POST" action = "procesar/modificar.php">
 
-			<label>Apellido:</label>
-			<input type="text" name="txtApellido" value="<?php echo  $usuario->getApellido();?>">
-		<br><br>
+								<input type="hidden" name="txtId" value="<?php echo $usuario->getIdUsuario(); ?>">
 
-			<label>Username</label>
-			<input type="text" name="txtUsername" value="<?php echo $usuario->getUsername();?>">
-		<br><br>
+								<div class="row mt">
+					            	<label class="col-lg-2 control-label">Nombre</label>
+					            	<div class="col-lg-10">
+										<input type="text" name="txtNombre" class="form-control" value="<?php echo $usuario->getNombre();?>">
+							    	</div>
+								</div>
 
-			<label>Password</label>
-			<input type="text" name="txtPassword" value="<?php echo $usuario->getPassword();?>">
-		<br><br>
+								<div class="row mt">
+									<label class="col-lg-2 control-label">Apellido:</label>
+									<div class="col-lg-10">
+										<input type="text" name="txtApellido" class="form-control" value="<?php echo  $usuario->getApellido();?>">
+									</div>
+								</div>
 
-			<label>Fecha Nacimiento:</label>
-			<input type="date" name="txtFechaNacimiento" value="<?php echo  $usuario->getFechaNacimiento();?>">
-		<br><br> 
+								<div class="row mt">
+									<label class="col-lg-2 control-label">Username</label>
+									<div class="col-lg-10">
+										<input type="text" name="txtUsername" class="form-control" value="<?php echo $usuario->getUsername();?>">
+									</div>
+								</div>
 
-			<label>Tipo Documento: </label>
-			<select name="cboTipoDocumento">
-				<option value="0">Seleccionar</option>
-			</select>
-		<br><br> 
+								<div class="row mt">
+									<label class="col-lg-2 control-label">Password</label>
+									<div class="col-lg-10">
+										<input type="text" name="txtPassword" class="form-control" value="<?php echo $usuario->getPassword();?>">
+									</div>
+								</div>
 
-			<label>Numero Documento:</label>
-			<input type="text" name="txtNumeroDocumento" value="<?php echo  $usuario->getNumeroDocumento();?>">
-		<br><br> 
+								<div class="row mt">
+									<label class="col-lg-2 control-label">Fecha Nacimiento:</label>
+									<div class="col-lg-10">
+										<input type="date" name="txtFechaNacimiento" class="form-control" value="<?php echo $usuario->getFechaNacimiento();?>">
+							 		</div>
+								</div>
 
+								 <div class="row mt">
+					          		<label class="col-lg-2 control-label">Tipo Documento: </label>
+					          		<div class="col-lg-10">
+					        			<select name="cboTipoDocumento" id="cboTipoDocumento">
+					              
+					        				<option value="0">Seleccionar</option>
+					        		  		<?php
+					                			foreach ($listadoDocumento as $tipoDocumento):
+					                     			$selected = '';
+							                      if ($usuario->getIdTipoDocumento() == $tipoDocumento->getIdTipoDocumento()){
+							                        $selected = "SELECTED";
+							                      }
+					                    
+					              			?>
 
-		<input type="submit" name="btnGuardar" value="Actualizar">		
-	</form>
+								              <option value="<?php echo $tipoDocumento->getIdTipoDocumento(); ?>" <?php echo $selected; ?>>
+								              <?php echo $tipoDocumento; ?>
+								              </option>
+								              <?php endforeach ?>
+					        			
+					        			</select>
+					        		</div>
+					        	</div>
 
+								<div class="row mt">
+									<label class="col-lg-2 control-label">Numero Documento:</label>
+									<div class="col-lg-10">
+										<input type="text" name="txtNumeroDocumento" value="<?php echo  $usuario->getNumeroDocumento();?>">
+									</div>
+								</div>
+
+								<div align="left">
+					             	<div class="row mt">
+					                	<div class="col-lg-offset-2 col-lg-10">
+											<input type="submit" name="btnGuardar" value="Actualizar">	
+										</div>
+									</div>
+								</div>	
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</section>
 </body>
 </html>

@@ -2,12 +2,10 @@
 
 require_once '../../menu.php';
 require_once '../../class/Paciente.php';
+require_once ('../../class/Turno.php');
 
 $listadoPaciente = Paciente::obtenerTodos();
-
-require_once ('../../class/turno.php');
 ?>
-
 <br><br>
 <!DOCTYPE html>
 <html>
@@ -16,38 +14,26 @@ require_once ('../../class/turno.php');
     <script src='../../static/fullCalendar/js/main.js'></script>
     <script src='../../static/fullCalendar/js/es.js'></script>
 ​
-<link href='../../static/fullCalendar/main.css' rel='stylesheet' />
-<style>
-​
-  body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
-​
-  #calendar {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-​
-</style>
+    <link href='../../static/fullCalendar/main.css' rel='stylesheet' />
+   
+​ 
 </head>
-
-
 <body>
-<br><br>
-
+<br>
+​
 <section id="main-content">
+  <div align="center">
+    <i class="btn btn-danger"></i>Turno Cancelado &nbsp;&nbsp;&nbsp;&nbsp;
+    <i class="btn btn-success"></i>Turno Atendido &nbsp;&nbsp;&nbsp;&nbsp;
+    <i class="btn btn-warning"></i>Turno Confirmado &nbsp;&nbsp;&nbsp;&nbsp;
+    <i class="btn btn-primary" ></i>Turno en Espera
   <section class="wrapper">
 ​
-<div id='calendar'></div>
-​
-​
+    <div id='calendar'></div>
     
+  </section>
 </section>
-</section>
-
+​
 <!-- Modal Turnos -->
 <div class="modal fade" id="modalCalendar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -58,9 +44,10 @@ require_once ('../../class/turno.php');
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="modal_body">
         Turno N°: <input type="text" id="id_turno" >
         <br><br>
+        
         Paciente:
         <select    id="id_paciente" >
         <option value="0">Ver Pacientes</option>
@@ -73,99 +60,93 @@ require_once ('../../class/turno.php');
 ​
         <?php endforeach ?>
       </select>
+      <br><br>
+      Estado:
+        <select id="id_estado">
+          <option value="0">Seleccionar</option>
+          <option value="1">Turno Cancelado</option>
+          <option value="2">Turno Atendido</option>
+          <option value="3">Turno Confirmado</option>
+          <option value="4">Turno en espera</option>
+        </select>
 ​
         
       </div>
       <div class="modal-footer">
         
-        <button type="button" class="btn btn-primary" onclick="asignarPaciente()">Guardar paciente</button>
+        <button type="button" class="btn btn-primary"  onclick="asignarPaciente()">Guardar </button>
+
       </div>
     </div>
   </div>
 </div>
-
-
+​
+​
 <!--Fin Modal Turnos -->
 ​
-​
-
-
+</body>
 <script>
-  var id_profesional = <?php echo $_GET['idProfesional']; ?>;
-  var events =  {
-          url: '/programacion3/Gestion/modulos/turno/procesar/turnos_calendario.php',
-          method: 'GET',
-          extraParams: {
-            idProfesional: id_profesional
-          },
-          failure: function() {
-            alert('Este profesional no tiene turnos');
-          }
-        }
+ var calendarEl = document.getElementById('calendar');
+ var calendar = new FullCalendar.Calendar(calendarEl, {
 
-  //alert(id_profesional);
-  var calendarEl = document.getElementById('calendar');
-​
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+
       eventClick: function(info,date) {
+
         var eventObj = info.event;
-​
-        $('#id_turno').val(eventObj.title);
-​
-    
+        $('#id_turno').val(eventObj.id);
+
         $('#modalCalendar').modal('show');
         
+        
       },
-​
+
       locale:'es',
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
       },
-      initialDate: '2020-10-13',
+      initialDate: '2020-11-01',
       navLinks: true, // can click day/week names to navigate views
       businessHours: true, // display business hours
       editable: true,
       selectable: true,
       // your event source
-      eventSources: 
-      [events]
-    
-​
-    
-​
-    });
-  document.addEventListener('DOMContentLoaded', function() {
-    
-​
-    calendar.render();
-​
-
-    
-  });
-​
-  function asignarPaciente(){
-     //var idTurno = $('#id_turno').val();
-     //alert(idTurno);
+      eventSources: [{
+          url: '/programacion3/Gestion/modulos/turno/procesar/turnos_calendario.php',
+          method: 'GET',
+          extraParams: {
+            idProfesional: <?php echo $_GET['idProfesional']; ?>
+          },
+             // a non-ajax option
+          textColor: 'black'
+        }]
+    })
+      document.addEventListener('DOMContentLoaded', function() {
+          calendar.render();
+      })
+      function asignarPaciente(){
        $.ajax({
         type: 'GET',
         url : "/programacion3/Gestion/modulos/turno/procesar/guardar_paciente.php",
         data: { 
-​
            'turno': $('#id_turno').val(),
-           'paciente': $('#id_paciente').val()
+           'paciente': $('#id_paciente').val(),
+           'estado': $('#id_estado').val()
         },
         success: function(data){
-          
           calendar.refetchEvents();
+
         }
-​
+        
       })
-      
+
       $('#modalCalendar').modal('toggle');
-    
   }
+
+ 
 </script>
-</body>
+
+
+
 </html>

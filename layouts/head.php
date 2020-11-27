@@ -1,7 +1,7 @@
+
+
 <head>
-
-
-    <meta charset="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
@@ -27,6 +27,7 @@
 
     <!-- js placed at the end of the document so the pages load faster -->
   <script src="/programacion3/Gestion/static/template/lib/jquery/jquery.min.js"></script>
+  <script src="/programacion3/Gestion/static/template/lib/jquery/jquery.js"></script>
   <script src="/programacion3/Gestion/static/template/lib/bootstrap/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="/programacion3/Gestion/static/template/lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="/programacion3/Gestion/static/template/lib/jquery.scrollTo.min.js"></script>

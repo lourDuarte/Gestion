@@ -3,8 +3,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 create database gestion_psicologia;
-use  gestion_psicologia;
-
+use gestion_psicologia;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,12 +31,7 @@ CREATE TABLE `persona` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-
 INSERT INTO `persona` (`nombre`, `apellido`, `id_tipo_documento`, `numero_documento`, `fecha_nacimiento`, `id_estado`) VALUES
-('Julia', 'Moendez', 0, '55885', '0000-00-00', 1),
-('Ana', 'Torres', 3, '', '0000-00-00', 1),
-('Carlos', 'Denis', NULL, NULL, NULL, 1),
-('Julia', 'Riquelme', 0, '55885', '0000-00-00', 1),
 ('Mario', 'Gamarra', NULL, NULL, NULL, 1),
 ('Sara', 'Rodriguez', NULL, NULL, NULL, 1);
 
@@ -46,8 +40,6 @@ INSERT INTO `persona` (`nombre`, `apellido`, `id_tipo_documento`, `numero_docume
 --
 -- Estructura de tabla para la tabla `paciente`
 --
-
-
 CREATE TABLE `paciente` (
   `id_paciente` int auto_increment not null,
   `id_persona` int(11) NOT NULL,
@@ -55,9 +47,35 @@ CREATE TABLE `paciente` (
   primary key(id_paciente)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `paciente` (`id_persona`, `descripcion`) VALUES
-(1, ' '),
-(4,'ninguna');
+
+create table ficha (
+`id_ficha` int auto_increment not null,
+`id_paciente` int(11) not null,
+`id_profesional` int(11) not null,
+`id_tratamiento` int(11) null,
+`id_tipo_atencion` int(11) not null,
+`fecha_alta` date not null,
+primary key (id_ficha)
+);
+
+create table `pacienteObservacion`(
+`id_paciente_observacion` int auto_increment not null,
+`id_paciente` int(11) not null,
+`descripcion` mediumtext not null,
+primary key(id_paciente_observacion)
+);
+
+CREATE TABLE `tipoAtencion` (
+  `id_tipo_atencion` int auto_increment NOT NULL,
+  `descripcion` varchar(25) NOT NULL,
+  primary key (id_tipo_atencion)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+insert into tipoAtencion(`descripcion`) values 
+("Familiar"),
+("Individual"),
+("Especial");
+
 -- --------------------------------------------------------
 
 --
@@ -71,9 +89,7 @@ CREATE TABLE `profesional` (
   primary key (id_profesional)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `profesional` (`id_persona`, `matricula`) VALUES
-(2, 268),
-(3,220);
+
 -- --------------------------------------------------------
 
 --
@@ -92,8 +108,8 @@ CREATE TABLE `usuario` (
 
 
 INSERT INTO `usuario` (`id_persona`, `username`, `password`, `fecha_ultimo_login`, `id_perfil`) VALUES
-(5, 'mgamarra', '123456', NULL, 1),
-(6, 'srodriguez', '123456', NULL, 2);
+(1, 'mgamarra', '123456', NULL, 1),
+(2, 'srodriguez', '123456', NULL, 2);
 
 
 
@@ -110,21 +126,20 @@ CREATE TABLE `domicilio` (
   `piso` varchar(30) DEFAULT NULL,
   `manzana` varchar(30) DEFAULT NULL,
   `id_persona` int(11) NOT NULL,
+  `id_barrio` int(11) NOT NULL,
   primary key(id_domicilio)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
-select*from domicilio;
-INSERT INTO `domicilio` ( `calle`, `altura`, `piso`, `manzana`, `id_persona`) VALUES
-('Junin', 850, NULL, '300', 7);
+
+
 --
 -- Estructura de tabla para la tabla `barrio`
 --
 
-
 CREATE TABLE `barrio`(
 `id_barrio` int auto_increment not null,
-`descripcion` varchar(250) not null,
+`descripcion` varchar(25) not null,
 primary key(id_barrio)
 );
 
@@ -144,8 +159,6 @@ CREATE TABLE `persona_contacto` (
   );
 
 
-INSERT INTO persona_contacto (`id_persona`,`id_tipo_contacto`, `valor`) VALUES 
-(1,2, 3704678952);
 
 
 -- --------------------------------------------------------
@@ -159,7 +172,6 @@ CREATE TABLE `tipoContacto` (
   primary key(id_tipo_contacto)
 );
 
-select*from persona_contacto;
 INSERT INTO tipoContacto (`descripcion`) VALUES
 ("CELULAR"),
 ("TELEFONO"),
@@ -219,7 +231,8 @@ CREATE TABLE `profesional_especialidad`(
 
 -- Estructura de tabla para la tabla `obraSocial`
 --
- 
+    
+
 CREATE TABLE `obraSocial` (
   `id_obra_social` int auto_increment NOT NULL,
   `nombre` varchar(30) NOT NULL,
@@ -235,26 +248,21 @@ CREATE TABLE `profesional_OS`(
  primary key(id_obra_social_profesional)
  );
 
-
- CREATE TABLE `autorizacion`(
- `id_paciente` int(11)  null,
- `cantidad_autorizada` int (11)  null,
- `fecha` date null
+ CREATE TABLE `tratamiento`(
+ `id_tratamiento` int auto_increment not null,
+ `tipo` varchar(50) not null,
+ `observacion` varchar(150) not null,
+ primary key (id_tratamiento)
  );
- 
-drop table tratamiento;
- insert into autorizacion (id_paciente,cantidad_autorizada,fecha) VALUES
- (1,4,'20-10-05'),
- (2,3,'20-10-10'),
- (3,8,'20-10-15');
+
 
  CREATE TABLE `paciente_OS`(
  `id_obra_social_paciente` int auto_increment not null,
  `id_obra_social` int (11) not null,
  `id_paciente` int (11) not null,
+ `numero_asociado` int(11) not null,
  primary key(id_obra_social_paciente)
  );
-
 
 -- --------------------------------------------------------
 
@@ -268,14 +276,19 @@ CREATE TABLE `modulo` (
   `directorio` varchar(30) NOT NULL,
   primary key(id_modulo)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-drop table modulo;
 
 INSERT INTO `modulo` (`descripcion`, `directorio`) VALUES
+('Dashboard', 'dashboard'),
+('Barrio', 'barrio'),
 ('Paciente','pacientes'),
 ('Profesional','profesional'),
-('Seguridad','seguridad'),
+('Fichas','fichaPaciente'),
 ('Pago','pago'),
-('Turno','turno');
+('Turno','turno'),
+('Agenda','agenda'),
+('Usuarios','usuarios'),
+('Perfil','perfil'),
+('Modulo','modulo');
 
 
 -- --------------------------------------------------------
@@ -307,17 +320,24 @@ CREATE TABLE `perfil_modulo` (
   primary key(id_perfil_modulo)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
-
 INSERT INTO `perfil_modulo` (`id_perfil`,`id_modulo` ) VALUES
 (1,1),
 (1,2),
 (1,3),
 (1,4),
 (1,5),
+(1,6),
+(1,7),
+(1,8),
+(1,9),
+(1,10),
+(1,11),
 (2,2),
-(2,5),
-(2,4);
+(2,3),
+(2,4),
+(2,6),
+(2,7),
+(2,8);
 
 CREATE TABLE `agenda`(
 `id_agenda` int auto_increment NOT NULL,
@@ -330,10 +350,9 @@ CREATE TABLE `agenda`(
 `generado` int(11) null,
 primary key (id_agenda)
 );
-insert into agenda (id_profesional, hora_desde,hora_hasta,fecha_desde,fecha_hasta,duracion,generado) VALUES
-(1,'17:00','18:00','2020-10-01','2020-10.28',30,1);
 
-select*from agenda;
+
+
 CREATE TABLE `agendaDia`(
 `id_agenda` int(11) not null,
 `lunes`  tinyint(1) default null,
@@ -343,19 +362,10 @@ CREATE TABLE `agendaDia`(
 `viernes` tinyint(1)  null
 );
 
-insert into agendaDia (id_agenda, lunes,martes,miercoles,jueves,viernes) VALUES
-(1,1,0,0,1,0);
-
-
-
-
-SELECT*FROM AGENDA
-SELECT * FROM agendaDia INNER JOIN agenda ON agendaDia.id_agenda = agenda.id_agenda
-WHERE agendaDia.id_agenda = '1';
 
 CREATE TABLE `turno`(
 `id_turno` int auto_increment NOT NULL,
-`id_paciente` int(11) null default '0',
+`id_paciente` int(11) null,
 `id_profesional` int(11) not null,
 `fecha` date not null,
 `hora` time null,
@@ -363,23 +373,46 @@ CREATE TABLE `turno`(
 primary key(id_turno)
 );
 
+insert into turno (id_profesional,fecha,hora) VALUES
+(1,'2020-10-20','17:00'),
+(1,'2020-10-20','18:00'),
+(1,'2020-10-22','17:00'),
+(1,'2020-10-22','18:00');
+
+
+
 CREATE TABLE `estadoTurno`(
 `id_estado` int auto_increment NOT NULL,
 `descripcion` varchar(25) not null,
 primary key(id_estado)
 );
+
 insert into estadoTurno (descripcion) VALUES
-('cancelado'),
-('atendido');
+('Turno cancelado'),
+('Turno atendido'),
+('Turno confirmado'),
+('Turno en espera');
 
-insert into turno (id_profesional,fecha,hora,id_estado) VALUES
-(1,'2020-10-15','17:00',1),
-(1,'2020-10-15','17:30',1),
-(1,'2020-10-19','17:00',2),
-(1,'2020-10-19','17:30',2),
-(1,'2020-10-22','17:00',2),
-(1,'2020-10-22','17:30',1),
-(1,'2020-10-26','17:30',2),
-(1,'2020-10-26','17:30',2);
+CREATE TABLE `PagoOS`(
+`id_pago` int auto_increment NOT NULL,
+`id_paciente` int(11) not null,
+`id_obra_social` int (11) null,
+`sesiones_autorizadas` int(11) not null,
+`sesiones_abonada` int(11) not null,
+`monto_sesion` int(11) not null,
+`fecha` date not null,
+`id_estado` int(11)  null,
+`total` int (11) not null,
+primary key (id_pago)
+);
 
-select*from estadoTurno
+CREATE TABLE `estadoPago`(
+`id_estado` int auto_increment NOT NULL,
+`descripcion` varchar (25) not null,
+primary key (id_estado)
+);
+
+insert into estadoPago (descripcion) VALUES 
+('Completo'),
+('Incompleto')
+

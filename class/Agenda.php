@@ -19,9 +19,7 @@ class Agenda{
 	private $_duracion;
     
     private $_generado;
-   
   
-
 	private $_arrDias;
 
    
@@ -186,6 +184,7 @@ class Agenda{
     }
 
     public function actualizar(){
+
         $sql= " UPDATE agenda SET hora_desde = '$this->_horaDesde', hora_hasta = '$this->_horaHasta', "
             . " fecha_desde = '$this->_fechaDesde', fecha_hasta = '$this->_fechaHasta', duracion = $this->_duracion"
             . " WHERE id_agenda = $this->_idAgenda ";
@@ -196,13 +195,15 @@ class Agenda{
     }
 
     public function actualizarGenerador(){
+
         $sql= " UPDATE agenda SET generado = $this->_generado WHERE id_agenda = $this->_idAgenda ";
-        echo $sql;
+        //echo $sql;
         $mysql = new MySQL();
         $mysql->actualizar($sql);
     }
 
     public function eliminar(){
+
         $sql = " DELETE FROM agenda "
             . " INNER JOIN agendaDia ON agenda.id_agenda = agendaDia.id_agenda "
             . " WHERE agenda.id_agenda = $this->_idAgenda ";
@@ -214,6 +215,7 @@ class Agenda{
 
 
     public function obtenerTodos(){
+
     	$sql= " SELECT * FROM agenda ";
 
     	$mysql= new MySQL();
@@ -247,6 +249,7 @@ class Agenda{
     }
 
     public function obtenerAgendaPorId($id){
+        
     	$sql= " SELECT * FROM agenda "
     		. " WHERE id_agenda = ". $id;
 

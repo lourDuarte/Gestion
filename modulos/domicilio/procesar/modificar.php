@@ -10,12 +10,14 @@ $calle = $_POST['txtCalle'];
 $altura = $_POST['txtAltura'];
 $piso = $_POST['txtPiso'];
 $manzana = $_POST['txtManzana'];
+$idBarrio = $_POST['cboBarrio'];
 
 $domicilio=Domicilio::obtenerPorIdPersona($idPersona);
 $domicilio->setCalle($calle);
 $domicilio->setAltura($altura);
 $domicilio->setPiso($piso);
 $domicilio->setManzana($manzana);
+$domicilio->setIdBarrio($idBarrio);
 
 $domicilio->actualizar();
 

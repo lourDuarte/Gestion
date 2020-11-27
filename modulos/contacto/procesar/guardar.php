@@ -8,6 +8,40 @@ $modulo = $_POST['txtModulo'];
 $valor = $_POST['txtValor'];
 $idTipoContacto = $_POST['cboTipoContacto'];
 
+
+session_start();
+
+if (empty(trim($valor))){
+	$_SESSION['mensaje_error']="DEBE INGRESAR EL VALOR";
+	header("location:../alta.php");
+	exit;
+}
+
+function validarValor($valor){
+ 	$mysql = new MySQL();
+
+ 	$sql = " SELECT * FROM persona_contacto WHERE valor = '$valor'";
+
+ 	$result = $mysql->consultar($sql);
+ 	if(mysqli_num_rows($result) > 0 ){
+ 		return 1;
+ 	}
+}
+
+ if(validarValor($valor) == 1){
+ 	$_SESSION['mensaje_error']= "ESTE VALOR YA ESTA REGISTRADO";
+	header('location:../alta.php');
+	//echo "ERROR NOMBRE VACIO";
+	exit;
+}
+
+if($idTipoContacto == '0'){
+	$_SESSION['mensaje_error']="DEBE DEFINIR EL TIPO";
+	header("location:../alta.php");
+	exit;
+}
+
+
 $contacto= New Contacto;
 $contacto->setValor($valor);
 $contacto->setIdPersona($idPersona);

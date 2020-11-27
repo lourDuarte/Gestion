@@ -15,6 +15,12 @@ $duracion = $_POST['txtDuracion'];
 
 //validaciones
 
+if($profesional == '0'){
+    $_SESSION['mensaje_error'] = "DEBE INDICAR EL PROFESIONAL";
+    header('location:../alta.php');
+    exit;
+}
+
 if(empty(trim($fechaInicio))){
     $_SESSION['mensaje_error'] = "DEBE INDICAR LA FECHA DE INICIO DE LA AGENDA";
     header('location:../alta.php');
@@ -50,7 +56,7 @@ if(empty(trim($horaHasta))){
 }
 
 
-//
+//add agenda
 
 $agenda = new Agenda();
 $agenda->setIdProfesional($profesional);
@@ -59,14 +65,10 @@ $agenda->setHoraHasta($horaHasta);
 $agenda->setFechaDesde($fechaInicio);
 $agenda->setFechaHasta($fechaFinal);
 $agenda->setDuracion($duracion);
-//$agenda->setGenerado(" ");
 
 
 $agenda->guardar();
 
-
-
-//highlight_string(var_export($agenda,true));
 
 
 $lunes= $_POST['txtLunes'];
@@ -106,28 +108,22 @@ if (isset($viernes)){
 }
 
 
-	$agendaDia= new AgendaDia();
-	$agendaDia->setIdAgenda($agenda->getIdAgenda());
-	$agendaDia->setLunes($lunes);
-	$agendaDia->setMartes($martes);
-	$agendaDia->setMiercoles($miercoles);
-	$agendaDia->setJueves($jueves);
-	$agendaDia->setViernes($viernes);
+$agendaDia= new AgendaDia();
+$agendaDia->setIdAgenda($agenda->getIdAgenda());
+$agendaDia->setLunes($lunes);
+$agendaDia->setMartes($martes);
+$agendaDia->setMiercoles($miercoles);
+$agendaDia->setJueves($jueves);
+$agendaDia->setViernes($viernes);
 
 
 
 $agendaDia->guardar();
-//$agenda->aplicarAgenda($agenda->getIdAgenda());
-//highlight_string(var_export($agendaDia,true));
-highlight_string(var_export($agenda,true));
+
+//highlight_string(var_export($agenda,true));
 
 
-
-
-
-
-
-header('location:../listado.php')
+header('location:../listado.php?mensaje=1')
 
 
 

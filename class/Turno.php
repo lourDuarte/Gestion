@@ -11,8 +11,8 @@ class Turno
 	private $_idProfesional;
 	private $_fecha;
 	private $_hora;
-	//private $_fechaHoraCreacion;
-    //private $_generador;
+    private $_idEstado;
+
 
     /**
      * @return mixed
@@ -114,25 +114,16 @@ class Turno
         return $this;
     }
 
-    /**
+ /**
      * @return mixed
      */
-    public function getFechaHoraCreacion()
+    public function getIdEstado()
     {
-        return $this->_fechaHoraCreacion;
+        return $this->_idEstado;
     }
 
-    /**
-     * @param mixed $_fechaHoraCreacion
-     *
-     * @return self
-     */
-    public function setFechaHoraCreacion($_fechaHoraCreacion)
-    {
-        $this->_fechaHoraCreacion = $_fechaHoraCreacion;
 
-        return $this;
-    }
+
     public function obtenerTodos(){
             /*
              obtiene todos los turnos
@@ -155,14 +146,63 @@ class Turno
          $result = $mysql->consultar($sql);
          return $result;
     }
-    
-    public function obtenerPorIdTurno($id){
+
+    public function obtenerPorIdPaciente($id){
+
+        $sql = " SELECT turno.id_paciente, turno.fecha, turno.hora, turno.id_estado FROM turno "
+             . " INNER JOIN paciente ON paciente.id_paciente = turno.id_paciente "
+             . " WHERE paciente.id_paciente = ". $id;
+
         $mysql = new MySQL();
-        $sql = "SELECT * FROM turno WHERE id_turno = ". $id.";";
-         $result = $mysql->consultar($sql);
-         return $result;
+        $datos = $mysql->consultar($sql);
+
+        $mysql->desconectar();
+
+        $listado= self::_generarListadoTurno($datos);
+
+        return $listado;
     }
 
+     private function _generarListadoTurno($datos) {
+        $listado = array();
+        while ($registro = $datos->fetch_assoc()) {
+                $turno = new Turno();
+                $turno->_idTurno = $registro['id_turno'];
+                $turno->_idProfesional = $registro['id_profesional'];
+                $turno->_idPaciente = $registro['id_paciente'];
+                $turno->_fecha = $registro['fecha'];
+                $turno->_hora = $registro['hora'];
+                $turno->_idEstado = $registro['id_estado'];
+                $listado[] = $turno;
+        }
+        return $listado;
+    }
+    
+    public function obtenerPorIdTurno($id){
+        
+        $sql = " SELECT * FROM turno WHERE id_turno = ". $id;
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $turno= self::_generarTurno($data);
+
+        return $turno;
+    }
+
+    private function _generarTurno($data){
+        $turno = new Turno();
+        $turno->_idTurno = $data['id_turno'];
+        $turno->_idProfesional = $data['id_profesional'];
+        $turno->_idPaciente = $data['id_paciente'];
+        $turno->_fecha = $data['fecha'];
+        $turno->_hora = $data['hora'];
+        $turno->_idEstado = $data['id_estado'];
+        return $turno;
+
+    }
+    
     public function guardar(){
 
         $sql = " INSERT INTO turno (id_turno,id_paciente,id_profesional, fecha,hora,id_estado) "
@@ -177,6 +217,7 @@ class Turno
     }
   
     public function calcularHorario($id){
+
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $agenda = Agenda::obtenerAgendaPorId($id);
         $horaInicio = new DateTime($agenda->getHoraDesde());
@@ -194,6 +235,8 @@ class Turno
         return $periodo;
     }
 
+
+
     public function generar($idAgenda)
     {
     	$agenda = Agenda::obtenerAgendaPorId($idAgenda);
@@ -204,29 +247,24 @@ class Turno
 
         
 
-        //echo $agenda->getIdProfesional();
-
 
     	date_default_timezone_set('America/Argentina/Buenos_Aires');
+
     	$fecha1 = new DateTime($agenda->getFechaHasta());
 		$fecha2 = new DateTime($agenda->getFechaDesde());
         $fecha2->modify("- 1 day");
-        //$fecha1->modify("-1 day");
 		$diferencia = $fecha1->diff($fecha2);
-		//echo $diferencia->days;
 
         $dias = 0;
        
         $fechaActual = Date($agenda->getFechaDesde());
+        $fechaHoy = date("Y-n-d");
     	while ($dias < $diferencia->days) 
     	{
             $fecha = date("Y-m-d",strtotime($fechaActual."+ $dias days")); 
-            //echo "<br>".$fecha;
 
-            //echo "<br>". $fecha d-m-Y;
             $day_number =  date('N', strtotime($fecha));
     		
-            //echo "<br>".$day_number;
 
     		foreach ($agendaDia as $dia) 
             {
@@ -240,16 +278,16 @@ class Turno
                         
     					if ($dia->getLunes() == 1)
                         {
-                          //echo $fecha;
+        
                         
                             foreach( $calculoHorario as $hora ) 
                             {
                                 $horario = $hora->format('H:i:s');
-                                //echo "<br>".$horario;
+                              
                                 $turnos+=1;
                                 if ($horas < $totalTurnos)
                                 {
-                                    if ($fecha >= date("Y-m-d") ){
+                                    if ($fecha >= $fechaHoy){
                                     $turno = new Turno();
                                     $turno->setIdProfesional($agenda->getIdProfesional());
                                     $turno->setHora($horario);
@@ -270,24 +308,24 @@ class Turno
 
                         if ($dia->getMartes() == 1)
                         {
-                          //echo $fecha;
+                          
                         
                             foreach( $calculoHorario as $hora ) 
                             {
                                 $horario = $hora->format('H:i:s');
-                                //echo "<br>".$horario;
+                               
                                 $turnos+=1;
                                 if ($horas < $totalTurnos)
                                 {
-                                    if ($fecha >= date("Y-m-d")){
-                                    $turno = new Turno();
-                                    $turno->setIdProfesional($agenda->getIdProfesional());
-                                    $turno->setHora($horario);
-                                    $turno->setFecha($fecha);
+                                    if ($fecha >= $fechaHoy){
+                                        $turno = new Turno();
+                                        $turno->setIdProfesional($agenda->getIdProfesional());
+                                        $turno->setHora($horario);
+                                        $turno->setFecha($fecha);
 
-                                    $turno->guardar();
+                                        $turno->guardar();
 
-                                    $horas+=1;
+                                        $horas+=1;
                                     }
                                 }
                             }
@@ -299,16 +337,16 @@ class Turno
 
                         if ($dia->getMiercoles() == 1)
                         {
-                          //echo $fecha;
+                          
                         
                             foreach( $calculoHorario as $hora ) 
                             {
                                 $horario = $hora->format('H:i:s');
-                                //echo "<br>".$horario;
+                               
                                 $turnos+=1;
                                 if ($horas < $totalTurnos)
                                 {
-                                    if ($fecha >= date("Y-m-d")){
+                                    if ($fecha >= $fechaHoy){
                                     $turno = new Turno();
                                     $turno->setIdProfesional($agenda->getIdProfesional());
                                     $turno->setHora($horario);
@@ -328,16 +366,16 @@ class Turno
 
                         if ($dia->getJueves() == 1)
                         {
-                          //echo $fecha;
+                          
                         
                             foreach( $calculoHorario as $hora ) 
                             {
                                 $horario = $hora->format('H:i:s');
-                                //echo "<br>".$horario;
+                                
                                 $turnos+=1;
                                 if ($horas < $totalTurnos)
                                 {
-                                    if ($fecha >= date("Y-m-d")){
+                                    if ($fecha >= $fechaHoy){
                                     $turno = new Turno();
                                     $turno->setIdProfesional($agenda->getIdProfesional());
                                     $turno->setHora($horario);
@@ -357,16 +395,16 @@ class Turno
 
                         if ($dia->getViernes() == 1)
                         {
-                          //echo $fecha;
+                          
                         
                             foreach( $calculoHorario as $hora ) 
                             {
                                 $horario = $hora->format('H:i:s');
-                                //echo "<br>".$horario;
+                               
                                 $turnos+=1;
                                 if ($horas < $totalTurnos)
                                 {
-                                    if ($fecha >= date("Y-m-d")){
+                                    if ($fecha >= $fechaHoy){
                                     $turno = new Turno();
                                     $turno->setIdProfesional($agenda->getIdProfesional());
                                     $turno->setHora($horario);
@@ -392,6 +430,8 @@ class Turno
 
     		
 
+
+   
 }
 
 

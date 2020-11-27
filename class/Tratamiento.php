@@ -138,7 +138,7 @@ class Tratamiento{
     }
 
     public function __toString(){
-    	return $this->_tipo;
+    	return $this->_observacion;
     }
 }
 

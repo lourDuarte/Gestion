@@ -145,6 +145,30 @@ class Contacto {
         return $listado;
     }
 
+
+     public static function obtenerPorId($id){
+
+        $sql = " SELECT * FROM persona_contacto WHERE id_persona_contacto = ".$id ;
+
+        $mysql = new MySQL();
+        $result = $mysql->consultar($sql);
+        $mysql->desconectar();
+
+        $data = $result->fetch_assoc();
+        $contacto = self::_generarContacto($data);
+        return $contacto;
+    }
+
+    private function _generarContacto($data) {
+
+        $contacto = new Contacto();
+        $contacto->_idPersonaContacto = $data['id_persona_contacto'];
+        $contacto->_idPersona = $data['id_persona'];
+        $contacto->_idTipoContacto = $data['id_tipo_contacto'];
+        $contacto->_valor = $data['valor'];
+        return $contacto;
+    }
+
     public function guardar(){
 
         $sql= " INSERT INTO persona_contacto (id_persona_contacto, id_persona, id_tipo_contacto, valor ) "
@@ -162,7 +186,7 @@ class Contacto {
     }
 
     public function eliminar(){
-        $sql = "DELETE FROM persona_contacto WHERE id_persona_contacto = $this->_idPersonaContacto ";
+        $sql = " DELETE FROM persona_contacto WHERE id_persona_contacto = $this->_idPersonaContacto ";
 
         echo $sql;
 

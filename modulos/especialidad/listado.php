@@ -1,6 +1,7 @@
 <?php
 
 require_once '../../class/Especialidad.php';
+require_once "../../menu.php";
 
 $listadoEspecialidades = Especialidad::obtenerTodos();
 
@@ -22,54 +23,56 @@ if (isset($_GET['mensaje'])) {
 <html>
 <head>
 	<title>Listado Especialidades</title>
-	<link rel="stylesheet" type="text/css" href="../../static/css/table.css">
-	<link rel="stylesheet" type="text/css" href="../../static/css/menu.css">
+
 </head>
 <body>
-	<?php
-		require_once "../../menu.php";
-	?>
+<section id="main-content">
+	<section class="wrapper">
+		<?php if ($mensaje == ESPECIALIDAD_GUARDADO){ ?>
+				<h3>Especialidad añadida con exito</h3>
+				<br><br>
+		<?php }elseif ($mensaje == ESPECIALIDAD_ACTUALIZADA){ ?>
+			 	<h3>Especialidad actualizada con exito</h3>
+			 	<br><br>
+		<?php } ?>
+		<h3><i class="fa fa-angle-right"></i> Especialidades</h3>
+		<a href="alta.php"><button type="button" class="btn btn-primary btn-sm">
+         	Nueva Especialidad</button></a>
+		<div class="row mt">
+          <div class="col-md-12">
+            <div class="content-panel">
+              <table class="table table-striped table-advance table-hover">
+	              	<hr>
+		                <thead>
+		                  <tr>
+								<th>Nombre</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach ($listadoEspecialidades as $especialidad): ?>
+									<tr>
+										<td> <?php echo $especialidad->getTipo(); ?> </td>
+										<td>
+											<a href="modificar.php?id=<?php echo $especialidad->getIdEspecialidad(); ?>">
+												<img src="../../imagenes/iconos/update.png" title="actualizar">
+											</a>
+											<a href="procesar/eliminar.php?id=<?php echo $especialidad->getIdEspecialidad(); ?>">
+												<img src="../../imagenes/iconos/delete.png" title="eliminar">
+											</a>
+										</td>
+									</tr>
 
-	<br><br>
-	<?php if ($mensaje == ESPECIALIDAD_GUARDADO){ ?>
-			<h3>Especialidad añadida con exito</h3>
-			<br><br>
-	<?php }elseif ($mensaje == ESPECIALIDAD_ACTUALIZADA){ ?>
-		 	<h3>Especialidad actualizada con exito</h3>
-		 	<br><br>
-	<?php } ?>
+							<?php endforeach ?>
+						</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
+</section>
 
-	<br>
-
-	<table align="center">
-		<caption> Listado Especialidades </caption>
-		<tr>
-			<thead>
-				<th>Nombre</th>
-				<th>Acciones</th>
-			</thead>
-		</tr>
-
-		<?php foreach ($listadoEspecialidades as $especialidad): ?>
-				<tr>
-					<td> <?php echo $especialidad->getTipo(); ?> </td>
-					<td>
-						<a href="detalle.php?id=<?php echo $especialidad->getIdEspecialidad(); ?>">
-							<img src="../../imagenes/iconos/detalle.png" title="ver detalle">
-						</a>
-						<a href="modificar.php?id=<?php echo $especialidad->getIdEspecialidad(); ?>">
-							<img src="../../imagenes/iconos/update.png" title="actualizar">
-						</a>
-						<a href="procesar/eliminar.php?id=<?php echo $especialidad->getIdEspecialidad(); ?>">
-							<img src="../../imagenes/iconos/delete.png" title="eliminar">
-						</a>
-					</td>
-				</tr>
-
-		<?php endforeach ?>
-		</table>
-
-	</table>
+	
 	<br><br>
 	<div align="left">
 		<a href="alta.php">

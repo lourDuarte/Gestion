@@ -11,6 +11,7 @@ class Paciente extends Persona {
 	private $_descripcion;
 
     private $_arrObraSocial;
+    
 
 
     /**
@@ -151,6 +152,8 @@ class Paciente extends Persona {
         $paciente->_arrObraSocial = ObraSocial::obtenerOsPorIdPaciente($paciente->_idPaciente);
         return $paciente;
     }
+
+
 
  public function tieneObraSocial($idObraSocial){
         $sql = " SELECT * FROM paciente_OS "
